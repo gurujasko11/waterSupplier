@@ -34,6 +34,11 @@ public class Invoice {
         this.client = client;
     }
 
+//-----------------------------------------
+//
+//setters and getters
+//
+//-----------------------------------------
     public LocalDate getIssueDate() {
         return issueDate;
     }
