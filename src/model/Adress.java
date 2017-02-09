@@ -25,6 +25,19 @@ public class Adress {
         this.postalCode = new SimpleStringProperty();
         this.city = new SimpleStringProperty();
     }
+
+    public Adress(String street, Integer homeNumber, String postalCode, String city) {
+        this.street = new SimpleStringProperty(street);
+        this.homeNumber = new SimpleIntegerProperty(homeNumber);
+        this.flatNumber = new SimpleIntegerProperty();
+        this.postalCode = new SimpleStringProperty(postalCode);
+        this.city = new SimpleStringProperty(city);
+    }
+
+    public Adress(String street, Integer homeNumber, Integer flatNumber, String postalCode, String city) {
+        this(street, homeNumber, postalCode, city);
+        this.flatNumber.setValue(flatNumber);
+    }
 //-----------------------------------------
 //
 //functions
@@ -37,12 +50,12 @@ public class Adress {
         sb.append(this.getStreet());
         sb.append(" ");
         sb.append(this.getHomeNumber());
-        sb.append(" ");
         if(this.flatNumberProperty().getValue() != null) {
+            sb.append("/");
             sb.append(this.getFlatNumber());
-            sb.append(" ");
         }
-        sb.append(postalCode);
+        sb.append(" ");
+        sb.append(this.getPostalCode());
         sb.append(" ");
         sb.append(this.getCity());
         return sb.toString();

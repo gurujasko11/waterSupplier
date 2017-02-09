@@ -1,11 +1,12 @@
 package model;
 
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Invoice {
     StringProperty ID;
@@ -13,7 +14,7 @@ public class Invoice {
     LocalDate saleDate;
     StringProperty issuePlace;
     Client client;
-    List<InvoicePosition> positions;
+    ObservableList<InvoicePosition> positions;
 //-----------------------------------------
 //
 //constructors
@@ -26,14 +27,41 @@ public class Invoice {
         saleDate = issueDate;
         issuePlace = new SimpleStringProperty();
         client = null;
-        positions = new ArrayList<>();
+        positions = FXCollections.observableArrayList(
+                invoicePosition -> new Observable[] {
+                    invoicePosition.nameProperty(),
+                    invoicePosition.nettoPriceProperty(),
+                    invoicePosition.taxProperty(),
+                    invoicePosition.quantityProperty()
+                }
+        );
     }
 
     public Invoice(Client client) {
         this();
         this.client = client;
     }
+ //-----------------------------------------
+//
+//functions
+//
+//-----------------------------------------
+    public Double getBruttoTotal(){
+        return this.positions.stream().mapToDouble(position -> position.getBruttoValue()).sum();
+    }
 
+    public Double getNettoTotal(){
+        return this.positions.stream().mapToDouble(position -> position.getNettoValue()).sum();
+    }
+
+    public void addPosition(InvoicePosition position){
+        this.positions.add(position);
+    }
+//-----------------------------------------
+//
+//setters and getters
+//
+//-----------------------------------------
     public LocalDate getIssueDate() {
         return issueDate;
     }
@@ -70,11 +98,11 @@ public class Invoice {
         this.client = client;
     }
 
-    public List<InvoicePosition> getPositions() {
+    public ObservableList<InvoicePosition> getPositions() {
         return positions;
     }
 
-    public void setPositions(List<InvoicePosition> positions) {
+    public void setPositions(ObservableList<InvoicePosition> positions) {
         this.positions = positions;
     }
 

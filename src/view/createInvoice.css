@@ -1,0 +1,32 @@
+.background {
+    -fx-background-color: #d3d3d3;
+}
+
+.text-field {
+  -fx-background-color: #f8f8f8;
+  -fx-border-color: #c0c0c0;
+}
+
+.table-view .column-header {
+  -fx-background-color: #c0c0c0;
+}
+
+.table-view .column-header .label {
+  -fx-text-alignment: center;
+  -fx-font-size: 10;
+}
+
+.table-view .table-cell {
+  -fx-alignment: BOTTOM-CENTER;
+  -fx-padding: 2;
+  -fx-background-color: #f5f5f5;
+}
+
+.table-view .table-cell:odd {
+  -fx-background-color: #e5e4e2;
+}
+
+.button {
+    -fx-border-radius: 50;
+}
+
