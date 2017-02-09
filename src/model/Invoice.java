@@ -2,9 +2,10 @@ package model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Invoice {
@@ -13,7 +14,7 @@ public class Invoice {
     LocalDate saleDate;
     StringProperty issuePlace;
     Client client;
-    List<InvoicePosition> positions;
+    ObservableList<InvoicePosition> positions;
 //-----------------------------------------
 //
 //constructors
@@ -26,12 +27,24 @@ public class Invoice {
         saleDate = issueDate;
         issuePlace = new SimpleStringProperty();
         client = null;
-        positions = new ArrayList<>();
+        positions = FXCollections.observableArrayList();
     }
 
     public Invoice(Client client) {
         this();
         this.client = client;
+    }
+ //-----------------------------------------
+//
+//functions
+//
+//-----------------------------------------
+    public Double getBruttoTotal(){
+        return this.positions.stream().mapToDouble(position -> position.getBruttoValue()).sum();
+    }
+
+    public Double getNettoTotal(){
+        return this.positions.stream().mapToDouble(position -> position.getNettoValue()).sum();
     }
 
 //-----------------------------------------
@@ -79,7 +92,7 @@ public class Invoice {
         return positions;
     }
 
-    public void setPositions(List<InvoicePosition> positions) {
+    public void setPositions(ObservableList<InvoicePosition> positions) {
         this.positions = positions;
     }
 
