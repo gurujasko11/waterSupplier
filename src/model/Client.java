@@ -2,6 +2,7 @@ package model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.SpinnerValueFactory;
 
 public abstract class Client {
 
@@ -77,4 +78,5 @@ public abstract class Client {
         this.telephone.set(telephone);
     }
 
+    public abstract String getClientName();
 }
