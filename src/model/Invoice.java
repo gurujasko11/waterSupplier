@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Invoice {
     StringProperty ID;
@@ -47,6 +46,9 @@ public class Invoice {
         return this.positions.stream().mapToDouble(position -> position.getNettoValue()).sum();
     }
 
+    public void addPosition(InvoicePosition position){
+        this.positions.add(position);
+    }
 //-----------------------------------------
 //
 //setters and getters
@@ -88,7 +90,7 @@ public class Invoice {
         this.client = client;
     }
 
-    public List<InvoicePosition> getPositions() {
+    public ObservableList<InvoicePosition> getPositions() {
         return positions;
     }
 

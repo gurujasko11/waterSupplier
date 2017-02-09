@@ -27,7 +27,7 @@ public class TestLauncher extends Application {
         layout = loader.load();
         Scene scene = new Scene(layout);
         primaryStage.setScene(scene);
-        //CreateInvoiceController controller = loader.getController();
+        CreateInvoiceController controller = loader.getController();
 
 
 

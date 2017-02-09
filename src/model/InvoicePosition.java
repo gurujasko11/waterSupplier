@@ -26,7 +26,7 @@ public class InvoicePosition {
 //
 //-----------------------------------------
     public Double getBruttoValue() {
-        return getNettoValue()+getNettoValue();
+        return getNettoValue()+getTaxValue();
     }
 
     public Double getNettoValue() {

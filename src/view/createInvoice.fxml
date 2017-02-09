@@ -349,8 +349,8 @@
                         </DatePicker>
                         <SplitMenuButton fx:id="paymentForm" mnemonicParsing="false" text="332423" GridPane.columnIndex="1">
                            <items>
-                              <MenuItem mnemonicParsing="false" text="przelew" />
-                              <MenuItem mnemonicParsing="false" text="gotówka" />
+                              <MenuItem mnemonicParsing="false" onAction="#selectTransferAsPaymentForm" text="przelew" />
+                              <MenuItem mnemonicParsing="false" onAction="#selectCashAsPaymentForm" text="gotówka" />
                            </items>
                            <font>
                               <Font size="11.0" />
@@ -436,7 +436,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Dodaj Pozycje" />
+                              <Button mnemonicParsing="false" onAction="#handleAddPositon" text="Dodaj Pozycje" />
                            </children>
                         </HBox>
                      </children>
