@@ -67,4 +67,8 @@ public class Bussiness extends Client {
     public void setNIP(String NIP) {
         this.NIP.set(NIP);
     }
+
+    public String getClientName() {
+        return getRegularName();
+    }
 }

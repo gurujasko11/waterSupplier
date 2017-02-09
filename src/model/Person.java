@@ -59,4 +59,9 @@ public class Person extends Client {
     public void setLastName(String lastName) {
         this.lastName.set(lastName);
     }
+
+    public String getClientName() {
+        return getFirstName()+getLastName();
+    }
+
 }
