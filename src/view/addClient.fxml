@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.addClientController">
    <children>
       <GridPane layoutX="106.0" layoutY="230.0" prefHeight="549.0" prefWidth="412.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -37,18 +36,18 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <RadioButton contentDisplay="BOTTOM" mnemonicParsing="false" selected="true" text="Klient Indywidualnny" />
-                  <RadioButton mnemonicParsing="false" text="Firma" />
+                  <RadioButton fx:id="personButton" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#updateViewPerson" selected="true" text="Klient Indywidualnny" />
+                  <RadioButton fx:id="bussinessButton" mnemonicParsing="false" onAction="#updateViewBussiness" text="Firma" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Imie" />
+                  <Label fx:id="firstNameLabel" alignment="CENTER" contentDisplay="CENTER" text="Imie" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Nazwisko" />
+                  <Label fx:id="secondNameLabel" alignment="CENTER" contentDisplay="CENTER" text="Nazwisko" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
@@ -117,12 +116,12 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <Label text="nazwa(opcjonalna)" />
+                  <Label fx:id="optionalNameLabel" text="nazwa(opcjonalna)" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <TextField />
+                  <TextField fx:id="optionalName" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="8">
