@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -206,6 +207,18 @@ public class CreateInvoiceController {
                     }
                 }
         );
+
+        positionsTable.getItems().addListener(new ListChangeListener<InvoicePosition>() {
+            @Override
+            public void onChanged(Change<? extends InvoicePosition> c) {
+                nettoTotal.setText(invoice.getNettoTotal().toString());
+                bruttoTotal.setText(invoice.getBruttoTotal().toString());
+                total.setText(invoice.getBruttoTotal().toString());
+                payment.setText(invoice.getBruttoTotal().toString());
+            }
+        });
+
+
     }
 
 

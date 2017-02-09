@@ -1,5 +1,6 @@
 package model;
 
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -26,7 +27,14 @@ public class Invoice {
         saleDate = issueDate;
         issuePlace = new SimpleStringProperty();
         client = null;
-        positions = FXCollections.observableArrayList();
+        positions = FXCollections.observableArrayList(
+                invoicePosition -> new Observable[] {
+                    invoicePosition.nameProperty(),
+                    invoicePosition.nettoPriceProperty(),
+                    invoicePosition.taxProperty(),
+                    invoicePosition.quantityProperty()
+                }
+        );
     }
 
     public Invoice(Client client) {

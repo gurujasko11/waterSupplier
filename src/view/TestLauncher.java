@@ -29,9 +29,6 @@ public class TestLauncher extends Application {
         primaryStage.setScene(scene);
         CreateInvoiceController controller = loader.getController();
 
-
-
         primaryStage.show();
-
     }
 }
