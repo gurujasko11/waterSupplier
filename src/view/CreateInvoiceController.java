@@ -1,9 +1,8 @@
 package view;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -86,6 +85,8 @@ public class CreateInvoiceController {
     @FXML
     TextField payment;
 
+    DecimalFormat df = new DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale.US));
+
     @FXML
     public void initialize(){
         showOwner();
@@ -102,6 +103,7 @@ public class CreateInvoiceController {
         showInvoiceDetails();
         paymentForm.setText("przelew");
         initPositionsTable();
+        initPayment();
     }
 
     public CreateInvoiceController(){
@@ -109,7 +111,7 @@ public class CreateInvoiceController {
 
     public void showOwner(){
         ownerName.setText("Asset International Sebastian Oleszczuk");
-        ownerAddress.setText("ul. Plaszowska 31");
+        ownerAddress.setText("ul. Plaszowska 31 30-713 Kraków");
         ownerNip.setText("696-269-42-10");
     }
 
@@ -143,8 +145,8 @@ public class CreateInvoiceController {
     public void initPositionsTable(){
         positionsTable.setItems(invoice.getPositions());
         positionsTable.setEditable(true);
-        lpColumn.setCellFactory( cell ->
-                new TableCell(){
+                lpColumn.setCellFactory( cell ->
+                        new TableCell(){
                     @Override
                         public void updateItem( Object item, boolean empty )
                         {
@@ -211,15 +213,22 @@ public class CreateInvoiceController {
         positionsTable.getItems().addListener(new ListChangeListener<InvoicePosition>() {
             @Override
             public void onChanged(Change<? extends InvoicePosition> c) {
-                nettoTotal.setText(invoice.getNettoTotal().toString());
-                bruttoTotal.setText(invoice.getBruttoTotal().toString());
-                total.setText(invoice.getBruttoTotal().toString());
-                payment.setText(invoice.getBruttoTotal().toString());
+                nettoTotal.setText(df.format(invoice.getNettoTotal()));
+                bruttoTotal.setText(df.format(invoice.getBruttoTotal()));
+                total.setText(df.format(invoice.getBruttoTotal()));
+                payment.setText(df.format(invoice.getBruttoTotal()));
             }
         });
-
-
     }
 
-
+    public void initPayment(){
+        prepayment.textProperty().addListener(
+                (item, oldValue,newValue) -> {
+                    if(!newValue.equals(""))
+                        payment.setText(df.format(invoice.getBruttoTotal()-Double.parseDouble(newValue)));
+                });
+    };
 }
+
+
+
