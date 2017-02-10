@@ -52,7 +52,7 @@ public class BasicViewController {
         this.mainApp = mainApp;
         persons = new FilteredList<Client>(mainApp.getClients(), client -> client instanceof Person);
         bussinesses = new FilteredList<Client>(mainApp.getClients(), client -> client instanceof Bussiness);
-
+        System.out.println("gowno");
         personList.setItems(persons);
         businessList.setItems(bussinesses);
     }
@@ -76,7 +76,6 @@ public class BasicViewController {
     @FXML
     public void handleNewCustomer() {
         mainApp.showAddClient();
-        setMainApp(mainApp);
     }
 
     private void showBussinessDetails(Bussiness newValue) {
