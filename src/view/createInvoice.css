@@ -22,15 +22,28 @@
   -fx-background-color: #f5f5f5;
 }
 
+.table-view:focused {
+  -fx-text-fill:black;
+  -fx-border-color: #c0c0c0;
+}
+
+
 .table-view:focused .table-cell {
   -fx-text-fill:black;
 }
 
-
-
 .table-view .table-cell:odd {
   -fx-background-color: #e5e4e2;
 }
+
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+  //-fx-border-color: #c0c0c0;
+  -fx-table-cell-border-color: #c0c0c0;;
+}
+
+
+
 
 .button {
     -fx-border-radius: 50;
