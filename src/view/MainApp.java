@@ -3,7 +3,7 @@ package view;
  * Created by janusz on 08.02.17.
  */
 
-import database.DataBase;
+//import database.DataBase;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,10 +18,7 @@ import model.Client;
 import model.testLoader;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+
 
 public class MainApp extends Application {
     private transient Stage primaryStage;
@@ -61,7 +58,7 @@ public class MainApp extends Application {
             primaryStage.show();
 
             BasicViewController controller = loader.getController();
-            controller.setMainApp(this);
+            //controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
