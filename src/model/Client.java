@@ -16,7 +16,7 @@ public abstract class Client implements Externalizable {
     StringProperty phone;
     static long IP = 0;
     long client_ip;
-
+  
     abstract public String getInvoiceName();
 
 //-----------------------------------------
