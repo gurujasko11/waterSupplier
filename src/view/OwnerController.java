@@ -5,7 +5,6 @@ import javafx.scene.control.TextField;
 
 import model.Owner;
 
-
 /**
  * Created by busz on 11.02.17.
  */
@@ -55,7 +54,5 @@ public class OwnerController {
         postalCode.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setPostalCode(newValue); });
         city.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setCity(newValue); });
     }
-
-
 
 }
