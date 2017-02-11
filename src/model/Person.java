@@ -3,6 +3,10 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 public class Person extends Client {
 
     StringProperty firstName;
@@ -13,11 +17,27 @@ public class Person extends Client {
         return firstName.getValue() + " " + lastName.getValue();
     }
 
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        super.writeExternal(out);
+        out.writeObject(firstName.getValue());
+        out.writeObject(lastName.getValue());
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        super.readExternal(in);
+        firstName.setValue((String)in.readObject());
+        lastName.setValue((String)in.readObject());
+    }
+
 //-----------------------------------------
 //
 //constructors
 //
 //-----------------------------------------
+
 
     public Person(){
         super();

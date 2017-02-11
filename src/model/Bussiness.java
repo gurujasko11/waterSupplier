@@ -3,6 +3,10 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 public class Bussiness extends Client {
 
     StringProperty fullName;
@@ -14,11 +18,35 @@ public class Bussiness extends Client {
         return fullName.getValue();
     }
 
+    public Bussiness() {
+        super();
+        fullName = new SimpleStringProperty();
+        regularName = new SimpleStringProperty();
+        NIP = new SimpleStringProperty();
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        super.writeExternal(out);
+        out.writeObject(fullName.getValue());
+        out.writeObject(regularName.getValue());
+        out.writeObject(NIP.getValue());
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        super.readExternal(in);
+        fullName.setValue((String)in.readObject());
+        regularName.setValue((String)in.readObject());
+        NIP.setValue((String)in.readObject());
+    }
+
 //-----------------------------------------
 //
 //constructors
 //
 //-----------------------------------------
+
 
     public Bussiness(Adress deliveryAdress, Adress mainAdress, String email, String telephone, String fullName, String regularName, String NIP) {
         super(deliveryAdress, mainAdress, email, telephone);

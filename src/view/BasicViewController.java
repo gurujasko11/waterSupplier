@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.*;
 
+import java.io.IOException;
+
 /**
  * Created by janusz on 08.02.17.
  */
@@ -17,7 +19,6 @@ public class BasicViewController {
 
     @FXML
     public void initialize(){
-
     }
 
 }

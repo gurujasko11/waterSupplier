@@ -5,7 +5,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Adress {
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+public class Adress implements Externalizable{
     StringProperty street;
     IntegerProperty homeNumber;
     IntegerProperty flatNumber;
@@ -127,4 +132,21 @@ public class Adress {
         this.city.set(city);
     }
 
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(city.getValue());
+        out.writeObject(postalCode.getValue());
+        out.writeObject(street.getValue());
+        out.writeObject(homeNumber.getValue());
+        out.writeObject(flatNumber.getValue());
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        city.setValue((String)in.readObject());
+        postalCode.setValue((String)in.readObject());
+        street.setValue((String)in.readObject());
+        homeNumber.setValue((Integer)in.readObject());
+        flatNumber.setValue((Integer)in.readObject());
+    }
 }

@@ -28,9 +28,11 @@ public class MainApp extends Application {
 //    public DataBase db = null;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
         this.primaryStage = primaryStage;
-        testLoader.load(this);
+        DataLoader dl = new DataLoader(this);
+        dl.load();
+//        testLoader.load(this);
 //        Adress add = new Adress("jana",3,4,"pc","krakow");
 //        clients.add(new Person(add,add,"daniel@slaby.com","2234","Daniel","Slaby"));
 //        clients.add(new Person(add,add,"mocny@mariusz.com","4322","Mariusz","Mocny"));
