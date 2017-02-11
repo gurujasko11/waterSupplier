@@ -6,10 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Adress;
-import model.Bussiness;
-import model.ClientCell;
-import model.Person;
+import model.*;
 
 /**
  * Created by janusz on 10.02.17.
@@ -17,6 +14,8 @@ import model.Person;
 public class addClientController {
     MainApp mainApp;
     Stage dialogStage;
+
+    Client client;
 
     @FXML
     TextField firstName;
@@ -90,7 +89,16 @@ public class addClientController {
 
     @FXML
     private void handleCancel() {
-        mainApp.showBasicView();
+        dialogStage.close();
+//        return null;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     @FXML
@@ -100,20 +108,69 @@ public class addClientController {
             alert.setTitle("Uwaga");
             alert.setHeaderText("Wprowadzono za malo danych");
             alert.showAndWait();
+
         }
         else {
-            if(personButton.isPressed()) addNewPerson();
+            if(personButton.isSelected())
+                addNewPerson();
             else addNewBussiness();
-            mainApp.showBasicView();
+            System.out.println(client);
+            dialogStage.close();
         }
     }
 
     private void addNewPerson() {
-        Adress add = new Adress(street.getText(),Integer.parseInt(houseNumber.getText()),Integer.parseInt(flatNumber.getText()),zipCode.getText(),city.getText());
-        mainApp.clients.add(new Person(add,add,email.getText(),phone.getText(),firstName.getText(),secondName.getText()));
+        Adress add = null;
+        if(flatNumber.getText().isEmpty()) {
+            add = new Adress(
+                    street.getText(),
+                    Integer.parseInt(houseNumber.getText()),
+                    zipCode.getText(),
+                    city.getText());
+        }
+        else {
+            add = new Adress(
+                    street.getText(),
+                    Integer.parseInt(houseNumber.getText()),
+                    Integer.parseInt(flatNumber.getText()),
+                    zipCode.getText(),
+                    city.getText());
+        }
+        client =
+                new Person(add,
+                        add,
+                        email.getText(),
+                        phone.getText(),
+                        firstName.getText(),
+                        secondName.getText());
     }
 
     private void addNewBussiness() {
+
+        Adress add = null;
+        if(flatNumber.getText().isEmpty()) {
+            add = new Adress(
+                    street.getText(),
+                    Integer.parseInt(houseNumber.getText()),
+                    zipCode.getText(),
+                    city.getText());
+        }
+        else {
+            add = new Adress(
+                    street.getText(),
+                    Integer.parseInt(houseNumber.getText()),
+                    Integer.parseInt(flatNumber.getText()),
+                    zipCode.getText(),
+                    city.getText());
+        }
+        client =
+                new Bussiness(add,
+                        add,
+                        email.getText(),
+                        phone.getText(),
+                        optionalName.getText(),
+                        firstName.getText(),
+                        secondName.getText());
     }
 
     public boolean checkData() {
@@ -131,6 +188,32 @@ public class addClientController {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        if(client != null) { //tryb edycji
+            if(client instanceof Person){
+                updateViewPerson();
+                firstName.setText(((Person)client).getFirstName());
+                secondName.setText(((Person)client).getLastName());
+            }
+            else {
+                updateViewBussiness();
+                firstName.setText(((Bussiness)client).getFullName());
+                secondName.setText(((Bussiness)client).getNIP());
+                optionalName.setText(((Bussiness)client).getRegularName());
+            }
+            bussinessButton.setVisible(false);
+            personButton.setVisible(false);
+
+            email.setText(client.getEmail());
+            phone.setText(client.getTelephone());
+            street.setText(client.getMainAdress().getStreet());
+            houseNumber.setText(client.getMainAdress().homeNumberProperty().getValue().toString());
+            flatNumber.setText(client.getMainAdress().flatNumberProperty().getValue().toString());
+            zipCode.setText(client.getMainAdress().getPostalCode());
+            city.setText(client.getMainAdress().getCity());
+
+
+        }
+        this.client = null;
     }
 
     public void setDialogStage(Stage dialogStage) {

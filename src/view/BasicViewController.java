@@ -38,6 +38,7 @@ public class BasicViewController {
     @FXML
     Label clientEmail;
 
+    Client currentClient;
     @FXML
     ListView<Client> personList;
 
@@ -55,6 +56,7 @@ public class BasicViewController {
         System.out.println("gowno");
         personList.setItems(persons);
         businessList.setItems(bussinesses);
+        currentClient = null;
     }
     @FXML
     public void initialize(){
@@ -62,22 +64,67 @@ public class BasicViewController {
         businessList.setCellFactory(list -> new ClientCell());
         personList.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    showPersonDetails((Person)newValue);
+                    currentClient = newValue;
+                    if(newValue == null)
+                        showNull();
+                    else
+                        showPersonDetails((Person)newValue);
                 }
         );
         businessList.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    showBussinessDetails((Bussiness)newValue);
+                    currentClient = newValue;
+                    if(newValue == null)
+                        showNull();
+                    else
+                        showBussinessDetails((Bussiness)newValue);
                 }
         );
         showNull();
     }
 
     @FXML
+    public void handleDelete() {
+        if(currentClient != null) {
+            mainApp.clients.remove(currentClient);
+//            currentClient = null;
+            refresh();
+        }
+    }
+    @FXML
+    public void handleEditCustomer() {
+        Client tmp = currentClient;
+        Client result = null;
+        if(personList.getSelectionModel().getSelectedItems().isEmpty()
+                &&
+                businessList.getSelectionModel().getSelectedItems().isEmpty() )
+            return;
+        //przypadek kiedy nic nie jest wybrane
+        if(currentClient instanceof Person){
+            result = mainApp.showAddClient(tmp);
+        }
+        else {
+            result = mainApp.showAddClient(tmp);
+        }
+
+        if(result != null) {
+            mainApp.clients.remove(tmp);
+            mainApp.clients.add(result);
+            refresh();
+        }
+
+    }
+    @FXML
     public void handleNewCustomer() {
-        mainApp.showAddClient();
+        Client client = mainApp.showAddClient(null);
+        if(client != null) mainApp.clients.add(client);
+        refresh();
     }
 
+    public void refresh() {
+        personList.refresh();
+        businessList.refresh();
+    }
     private void showBussinessDetails(Bussiness newValue) {
         clientName.setText(newValue.getRegularName());
         clientSurename.setText(newValue.getNIP());
