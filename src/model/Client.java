@@ -110,8 +110,8 @@ public abstract class Client implements Externalizable {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeObject(this.getDeliveryAdress());
         out.writeObject(this.getMainAdress());
+        out.writeObject(this.getDeliveryAdress());
         out.writeObject(this.getEmail());
         out.writeObject(this.getPhone());
         out.writeObject(this.getClient_ip());
@@ -119,8 +119,8 @@ public abstract class Client implements Externalizable {
 
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        deliveryAdress = (Adress) in.readObject();
         mainAdress = (Adress) in.readObject();
+        deliveryAdress = (Adress) in.readObject();
         email = new SimpleStringProperty((String) in.readObject());
         phone = new SimpleStringProperty((String) in.readObject());
         client_ip = (long) in.readObject();

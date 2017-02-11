@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.*;
 
+import java.io.IOException;
+
 /**
  * Created by janusz on 08.02.17.
  */
@@ -85,15 +87,17 @@ public class BasicViewController {
     }
 
     @FXML
-    public void handleDelete() {
+    public void handleDelete() throws IOException {
         if(currentClient != null) {
             mainApp.clients.remove(currentClient);
 //            currentClient = null;
+            DataLoader dl = new DataLoader(mainApp);
+            dl.save();
             refresh();
         }
     }
     @FXML
-    public void handleEditCustomer() {
+    public void handleEditCustomer() throws IOException {
         Client tmp = currentClient;
         Client result = null;
         if(personList.getSelectionModel().getSelectedItems().isEmpty()
@@ -102,6 +106,8 @@ public class BasicViewController {
             return;
         //przypadek kiedy nic nie jest wybrane
         mainApp.showAddClient(tmp);
+        DataLoader dl = new DataLoader(mainApp);
+        dl.save();
         refresh();
         showClient(tmp);
 
@@ -117,9 +123,11 @@ public class BasicViewController {
     }
 
     @FXML
-    public void handleNewCustomer() {
+    public void handleNewCustomer() throws IOException {
         Client client = mainApp.showAddClient(null);
         if(client != null) mainApp.clients.add(client);
+        DataLoader dl = new DataLoader(mainApp);
+        dl.save();
         refresh();
     }
 
