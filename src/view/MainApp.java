@@ -3,10 +3,10 @@ package view;
  * Created by janusz on 08.02.17.
  */
 
+import database.DataBase;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
@@ -14,20 +14,21 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Adress;
 import model.Client;
-import model.Person;
 import model.testLoader;
-import view.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class MainApp extends Application {
     private transient Stage primaryStage;
     private transient BorderPane rootLayout = new BorderPane();
     public ObservableList<Client> clients = FXCollections.observableArrayList();
+
+//    public DataBase db = null;
 
     @Override
     public void start(Stage primaryStage) {
@@ -73,7 +74,7 @@ public class MainApp extends Application {
         return clients;
     }
 
-    public void showAddClient() {
+    public Client showAddClient(Client client) {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("addClient.fxml"));
@@ -88,12 +89,16 @@ public class MainApp extends Application {
             dialogStage.setScene(scene);
             addClientController controller = loader.getController();
             controller.setDialogStage(dialogStage);
+            controller.setClient(client);
             controller.setMainApp(this);
 
             dialogStage.showAndWait();
+            return controller.getClient();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
+
 }

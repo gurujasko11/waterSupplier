@@ -31,6 +31,12 @@ public class Person extends Client {
         this.lastName = new SimpleStringProperty(lastName);
     }
 
+
+    public Person(Adress deliveryAdress, Adress mainAdress, String email, String telephone, String firstName, String lastName, long ip) {
+        super(deliveryAdress, mainAdress, email, telephone, ip);
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+    }
 //-----------------------------------------
 //
 //setters and getters
@@ -61,7 +67,7 @@ public class Person extends Client {
     }
 
     public String getClientName() {
-        return getFirstName()+getLastName();
+        return getFirstName()+" "+getLastName();
     }
 
 }
