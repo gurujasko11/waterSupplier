@@ -122,17 +122,17 @@
                         </GridPane>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                            <children>
-                              <Button mnemonicParsing="false" text="dodaj klienta">
+                              <Button mnemonicParsing="false" onAction="#handleNewCustomer" text="dodaj klienta">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="edytuj klienta">
+                              <Button mnemonicParsing="false" onAction="#handleEditCustomer" text="edytuj klienta">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="usuń klienta">
+                              <Button mnemonicParsing="false" onAction="#handleDelete" text="usuń klienta">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
