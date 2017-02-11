@@ -2,14 +2,20 @@ package model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.SpinnerValueFactory;
 
-public abstract class Client {
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+public abstract class Client implements Externalizable {
 
     Adress deliveryAdress;
     Adress mainAdress;
     StringProperty email;
-    StringProperty telephone;
+    StringProperty phone;
+    static long IP = 0;
+    long client_ip;
 
     abstract public String getInvoiceName();
 
@@ -23,16 +29,38 @@ public abstract class Client {
         this.deliveryAdress = null;
         this.mainAdress = null;
         this.email = new SimpleStringProperty();
-        this.telephone = new SimpleStringProperty();
+        this.phone = new SimpleStringProperty();
+        this.client_ip = IP;
+        IP++;
     }
 
-    public Client(Adress deliveryAdress, Adress mainAdress, String email, String telephone) {
+    public Client(Adress deliveryAdress, Adress mainAdress, String email, String phone) {
         this.deliveryAdress = deliveryAdress;
         this.mainAdress = mainAdress;
         this.email = new SimpleStringProperty(email);
-        this.telephone = new SimpleStringProperty(telephone);
+        this.phone = new SimpleStringProperty(phone);
+        this.client_ip = IP;
+        IP++;
     }
 
+    public long getClient_ip() {
+        return client_ip;
+    }
+
+    public void setClient_ip(long client_ip) {
+        this.client_ip = client_ip;
+    }
+
+    public Client(Adress deliveryAdress, Adress mainAdress, String email, String phone, long ip) {
+        this.deliveryAdress = deliveryAdress;
+        this.mainAdress = mainAdress;
+        this.email = new SimpleStringProperty(email);
+        this.phone = new SimpleStringProperty(phone);
+        this.client_ip = ip;
+        if(ip >= IP)
+            IP = ip + 1;
+
+    }
     //-----------------------------------------
 //
 //setters and getters
@@ -66,17 +94,37 @@ public abstract class Client {
         this.email.set(email);
     }
 
-    public String getTelephone() {
-        return telephone.get();
+    public String getPhone() {
+        return phone.get();
     }
 
-    public StringProperty telephoneProperty() {
-        return telephone;
+    public StringProperty phoneProperty() {
+        return phone;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone.set(telephone);
+    public void setPhone(String phone) {
+        this.phone.set(phone);
     }
 
     public abstract String getClientName();
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(this.getDeliveryAdress());
+        out.writeObject(this.getMainAdress());
+        out.writeObject(this.getEmail());
+        out.writeObject(this.getPhone());
+        out.writeObject(this.getClient_ip());
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        deliveryAdress = (Adress) in.readObject();
+        mainAdress = (Adress) in.readObject();
+        email = new SimpleStringProperty((String) in.readObject());
+        phone = new SimpleStringProperty((String) in.readObject());
+        client_ip = (long) in.readObject();
+        if(client_ip >= IP)
+            IP = client_ip+1;
+    }
 }

@@ -3,6 +3,7 @@ package view;
  * Created by janusz on 08.02.17.
  */
 
+import database.DataBase;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,11 +18,17 @@ import model.Client;
 import model.testLoader;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class MainApp extends Application {
     private transient Stage primaryStage;
     private transient BorderPane rootLayout = new BorderPane();
     public ObservableList<Client> clients = FXCollections.observableArrayList();
+
+//    public DataBase db = null;
 
     @Override
     public void start(Stage primaryStage) {
@@ -93,4 +100,5 @@ public class MainApp extends Application {
         }
         return null;
     }
+
 }

@@ -103,6 +103,7 @@ public class addClientController {
 
     @FXML
     private void handleConfirm() {
+
         if(checkData() == false) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Uwaga");
@@ -111,12 +112,54 @@ public class addClientController {
 
         }
         else {
-            if(personButton.isSelected())
-                addNewPerson();
-            else addNewBussiness();
-            System.out.println(client);
+            if(client != null) {
+                //TRYB EDYCJI
+                if(personButton.isSelected()){
+                    editPerson();
+                }
+                else editBussiness();
+            }
+            else{
+                if(personButton.isSelected())
+                    addNewPerson();
+                else addNewBussiness();
+            }
             dialogStage.close();
         }
+    }
+
+    private void editBussiness() {
+        Bussiness bus = (Bussiness) client;
+        bus.setFullName(firstName.getText());
+        bus.setNIP(secondName.getText());
+        if(optionalName.getText().isEmpty())
+            bus.setRegularName(optionalName.getText());
+        else
+            bus.setRegularName(bus.getFullName());
+        bus.setEmail(email.getText());
+        bus.setPhone(phone.getText());
+        Adress add = bus.getMainAdress();
+        add.setCity(city.getText());
+        if(!flatNumber.getText().isEmpty())
+            add.setFlatNumber(Integer.parseInt(flatNumber.getText()));
+        add.setHomeNumber(Integer.parseInt(houseNumber.getText()));
+        add.setPostalCode(zipCode.getText());
+        add.setStreet(street.getText());
+    }
+
+    private void editPerson() {
+        Person bus = (Person) client;
+        bus.setFirstName(firstName.getText());
+        bus.setLastName(secondName.getText());
+        bus.setEmail(email.getText());
+        bus.setPhone(phone.getText());
+        Adress add = bus.getMainAdress();
+        add.setCity(city.getText());
+        if(!flatNumber.getText().isEmpty())
+            add.setFlatNumber(Integer.parseInt(flatNumber.getText()));
+        add.setHomeNumber(Integer.parseInt(houseNumber.getText()));
+        add.setPostalCode(zipCode.getText());
+        add.setStreet(street.getText());
     }
 
     private void addNewPerson() {
@@ -204,16 +247,16 @@ public class addClientController {
             personButton.setVisible(false);
 
             email.setText(client.getEmail());
-            phone.setText(client.getTelephone());
+            phone.setText(client.getPhone());
             street.setText(client.getMainAdress().getStreet());
             houseNumber.setText(client.getMainAdress().homeNumberProperty().getValue().toString());
             flatNumber.setText(client.getMainAdress().flatNumberProperty().getValue().toString());
             zipCode.setText(client.getMainAdress().getPostalCode());
             city.setText(client.getMainAdress().getCity());
-
-
+            this.client = client;
         }
-        this.client = null;
+        else
+            this.client = null;
     }
 
     public void setDialogStage(Stage dialogStage) {

@@ -26,6 +26,12 @@ public class Bussiness extends Client {
         this.regularName = new SimpleStringProperty(regularName);
         this.NIP = new SimpleStringProperty(NIP);;
     }
+    public Bussiness(Adress deliveryAdress, Adress mainAdress, String email, String telephone, String fullName, String regularName, String NIP, long ip) {
+        super(deliveryAdress, mainAdress, email, telephone, ip);
+        this.fullName = new SimpleStringProperty(fullName);
+        this.regularName = new SimpleStringProperty(regularName);
+        this.NIP = new SimpleStringProperty(NIP);;
+    }
 
     //-----------------------------------------
 //

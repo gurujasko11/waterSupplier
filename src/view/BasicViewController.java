@@ -39,6 +39,7 @@ public class BasicViewController {
     Label clientEmail;
 
     Client currentClient;
+
     @FXML
     ListView<Client> personList;
 
@@ -100,20 +101,21 @@ public class BasicViewController {
                 businessList.getSelectionModel().getSelectedItems().isEmpty() )
             return;
         //przypadek kiedy nic nie jest wybrane
-        if(currentClient instanceof Person){
-            result = mainApp.showAddClient(tmp);
-        }
-        else {
-            result = mainApp.showAddClient(tmp);
-        }
-
-        if(result != null) {
-            mainApp.clients.remove(tmp);
-            mainApp.clients.add(result);
-            refresh();
-        }
+        mainApp.showAddClient(tmp);
+        refresh();
+        showClient(tmp);
 
     }
+
+    private void showClient(Client client) {
+        if(client == null)
+            showNull();
+        if(client instanceof Person)
+            showPersonDetails((Person)client);
+        if(client instanceof Bussiness)
+            showBussinessDetails((Bussiness)client);
+    }
+
     @FXML
     public void handleNewCustomer() {
         Client client = mainApp.showAddClient(null);
@@ -130,7 +132,7 @@ public class BasicViewController {
         clientSurename.setText(newValue.getNIP());
         clientAddress.setText(newValue.getMainAdress().toString());
         clientEmail.setText(newValue.getEmail());
-        clientPhone.setText(newValue.getTelephone());
+        clientPhone.setText(newValue.getPhone());
 
         LabelClientName.setText("nazwa");
         LabelClientSurename.setText("nip");
@@ -141,7 +143,7 @@ public class BasicViewController {
         clientSurename.setText(newValue.getLastName());
         clientAddress.setText(newValue.getMainAdress().toString());
         clientEmail.setText(newValue.getEmail());
-        clientPhone.setText(newValue.getTelephone());
+        clientPhone.setText(newValue.getPhone());
 
         LabelClientName.setText("imie");
         LabelClientSurename.setText("nazwisko");
