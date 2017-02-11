@@ -2,14 +2,13 @@ package model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.SpinnerValueFactory;
 
 public abstract class Client {
 
     Adress deliveryAdress;
     Adress mainAdress;
     StringProperty email;
-    StringProperty telephone;
+    StringProperty phone;
 
     abstract public String getInvoiceName();
 
@@ -23,14 +22,14 @@ public abstract class Client {
         this.deliveryAdress = null;
         this.mainAdress = null;
         this.email = new SimpleStringProperty();
-        this.telephone = new SimpleStringProperty();
+        this.phone = new SimpleStringProperty();
     }
 
     public Client(Adress deliveryAdress, Adress mainAdress, String email, String telephone) {
         this.deliveryAdress = deliveryAdress;
         this.mainAdress = mainAdress;
         this.email = new SimpleStringProperty(email);
-        this.telephone = new SimpleStringProperty(telephone);
+        this.phone = new SimpleStringProperty(telephone);
     }
 
     //-----------------------------------------
@@ -66,16 +65,16 @@ public abstract class Client {
         this.email.set(email);
     }
 
-    public String getTelephone() {
-        return telephone.get();
+    public String getPhone() {
+        return phone.get();
     }
 
-    public StringProperty telephoneProperty() {
-        return telephone;
+    public StringProperty phoneProperty() {
+        return phone;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone.set(telephone);
+    public void setPhone(String phone) {
+        this.phone.set(phone);
     }
 
     public abstract String getClientName();

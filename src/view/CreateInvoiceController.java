@@ -216,9 +216,22 @@ public class CreateInvoiceController {
     public void initPayment(){
         prepayment.textProperty().addListener(
                 (item, oldValue,newValue) -> {
-                    if(!newValue.equals(""))
-                        payment.setText(DecimalUtil.format(invoice.getBruttoTotal()-Double.parseDouble(newValue)));
+                    if(newValue.matches("[^0-9.]")){
+                        prepayment.setText(oldValue);
+                    } else if(!newValue.equals("")  && newValue.matches("[0-9]*.??[0-9]*")) {
+                        payment.setText(DecimalUtil.format(invoice.getBruttoTotal() - Double.parseDouble(newValue)));
+                    } else {
+                        payment.setText(DecimalUtil.format(invoice.getBruttoTotal()));
+                    }
                 });
+    }
+
+    public boolean isValid() {
+        if(!DateUtil.validDate(issueDate.getText())) return false;
+        if(!DateUtil.validDate(saleDate.getText())) return false;
+        if(issuePlace.getText().isEmpty()) return false;
+        if(DecimalUtil.validDecimal(prepayment.getText())) return false;
+        return true;
     }
 }
 

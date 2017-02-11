@@ -83,7 +83,7 @@ public class BasicViewController {
         clientSurename.setText(newValue.getNIP());
         clientAddress.setText(newValue.getMainAdress().toString());
         clientEmail.setText(newValue.getEmail());
-        clientPhone.setText(newValue.getTelephone());
+        clientPhone.setText(newValue.getPhone());
 
         LabelClientName.setText("nazwa");
         LabelClientSurename.setText("nip");
@@ -94,7 +94,7 @@ public class BasicViewController {
         clientSurename.setText(newValue.getLastName());
         clientAddress.setText(newValue.getMainAdress().toString());
         clientEmail.setText(newValue.getEmail());
-        clientPhone.setText(newValue.getTelephone());
+        clientPhone.setText(newValue.getPhone());
 
         LabelClientName.setText("imie");
         LabelClientSurename.setText("nazwisko");

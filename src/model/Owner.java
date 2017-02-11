@@ -3,26 +3,79 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Owner {
+public enum Owner{
+    INSTANCE();
+
     Adress adress;
     StringProperty name;
     StringProperty NIP;
     StringProperty bankName;
     StringProperty accountNumber;
 
-    public Owner(Adress adress, StringProperty name, StringProperty NIP, StringProperty bankName, StringProperty accountNumber) {
-        this.adress = adress;
-        this.name = name;
-        this.NIP = NIP;
-        this.bankName = bankName;
-        this.accountNumber = accountNumber;
+    Owner(){
+        name = new SimpleStringProperty();
+        NIP = new SimpleStringProperty();
+        bankName = new SimpleStringProperty();
+        accountNumber = new SimpleStringProperty();
     }
 
-    public Owner() {
-        this.adress = new Adress();
-        this.name = new SimpleStringProperty();
-        this.NIP = new SimpleStringProperty();
-        this.bankName = new SimpleStringProperty();
-        this.accountNumber = new SimpleStringProperty();
+    public static Owner getInstance(){
+        return Owner.INSTANCE;
+    }
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public String getNIP() {
+        return NIP.get();
+    }
+
+    public StringProperty NIPProperty() {
+        return NIP;
+    }
+
+    public void setNIP(String NIP) {
+        this.NIP.set(NIP);
+    }
+
+    public String getBankName() {
+        return bankName.get();
+    }
+
+    public StringProperty bankNameProperty() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName.set(bankName);
+    }
+
+    public String getAccountNumber() {
+        return accountNumber.get();
+    }
+
+    public StringProperty accountNumberProperty() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber.set(accountNumber);
     }
 }
