@@ -36,6 +36,7 @@ public class BasicViewController {
 
     @FXML
     public void initialize(){
+
     }
 
     @FXML
