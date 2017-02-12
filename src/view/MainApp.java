@@ -27,6 +27,7 @@ public class MainApp extends Application {
 
 //    public DataBase db = null;
 
+
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
         this.primaryStage = primaryStage;
@@ -60,11 +61,52 @@ public class MainApp extends Application {
             primaryStage.show();
 
             BasicViewController controller = loader.getController();
-            //controller.setMainApp(this);
+            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void showClientsView(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("clients.fxml"));
+            TabPane BasicLayout = (TabPane)loader.load();
+
+            rootLayout.setCenter(BasicLayout);
+
+            primaryStage.close();
+            rootLayout.setPrefSize(BasicLayout.getPrefWidth(), BasicLayout.getPrefHeight());
+            primaryStage.setTitle("Welcome");
+            primaryStage.show();
+
+            BasicViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showOwnerView(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("owner.fxml"));
+            TabPane BasicLayout = (TabPane)loader.load();
+
+            rootLayout.setCenter(BasicLayout);
+
+            primaryStage.close();
+            rootLayout.setPrefSize(BasicLayout.getPrefWidth(), BasicLayout.getPrefHeight());
+            primaryStage.setTitle("Welcome");
+            primaryStage.show();
+
+            BasicViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

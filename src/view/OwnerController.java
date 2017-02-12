@@ -3,12 +3,15 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import javafx.stage.Stage;
 import model.Owner;
 
 /**
  * Created by busz on 11.02.17.
  */
 public class OwnerController {
+    MainApp mainApp;
+    Stage dialogStage;
 
     @FXML
     TextField name;
@@ -53,6 +56,10 @@ public class OwnerController {
         flatNumber.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setFlatNumber(Integer.parseInt(newValue)); });
         postalCode.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setPostalCode(newValue); });
         city.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setCity(newValue); });
+    }
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
     }
 
 }

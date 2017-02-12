@@ -17,8 +17,46 @@ import java.io.IOException;
  */
 public class BasicViewController {
 
+    MainApp mainApp;
+    Stage dialogStage;
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    public boolean tabControllFlag = true;
+    //flaga jest dlatego, ze klikajac na tab wywolywana jest ta sama funkcja ktora wywoluje
+    //sie przy wyjsciu z tego taba i trzeba odrozniac te sytuacje
+
+    @FXML
+    Tab clientsTab;
+
+    @FXML
+    Tab ownerTab;
+
     @FXML
     public void initialize(){
     }
 
+    @FXML
+    public void handleClientsClicked() {
+        //odpalam w main app ClientsController
+        if(tabControllFlag) {
+            System.out.println("KLAJENTS");
+
+            tabControllFlag = false;
+        }
+        else
+            tabControllFlag = true;
+    }
+
+    @FXML
+    public void handleOwnerClicked() {
+        if(tabControllFlag) {
+            System.out.println("OŁNER");
+            tabControllFlag = false;
+        }
+        else
+            tabControllFlag = true;
+    }
 }

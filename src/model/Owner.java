@@ -17,6 +17,7 @@ public enum Owner{
         NIP = new SimpleStringProperty();
         bankName = new SimpleStringProperty();
         accountNumber = new SimpleStringProperty();
+        adress = new Adress();
     }
 
     public static Owner getInstance(){

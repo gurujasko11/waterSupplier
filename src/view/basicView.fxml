@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 
-<?import javafx.scene.control.Tab?>
 <TabPane prefHeight="472.0" prefWidth="374.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BasicViewController">
     <tabs>
-        <Tab text="Untitled Tab 1">
+        <Tab fx:id="clientsTab" onSelectionChanged="#handleClientsClicked" text="klienci">
             <content>
-                <fx:include fx:id="clients" source="clients.fxml"/>
+                <fx:include fx:id="clients" source="clients.fxml" />
             </content>
         </Tab>
-        <Tab text="Untitled Tab 2">
+        <Tab fx:id="ownerTab" onSelectionChanged="#handleOwnerClicked" text="moje dane">
             <content>
-                <fx:include fx:id="owner" source="owner.fxml"/>
+                <fx:include fx:id="owner" source="owner.fxml" />
             </content>
         </Tab>
     </tabs>
