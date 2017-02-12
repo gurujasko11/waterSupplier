@@ -18,7 +18,6 @@ import java.io.IOException;
 public class BasicViewController {
 
     MainApp mainApp;
-    Stage dialogStage;
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -32,32 +31,27 @@ public class BasicViewController {
     Tab clientsTab;
 
     @FXML
+    private ClientsController clientsController;
+
+    @FXML
     Tab ownerTab;
 
     @FXML
     public void initialize(){
-
     }
+
 
     @FXML
     public void handleClientsClicked() {
-        //odpalam w main app ClientsController
-        if(tabControllFlag) {
+        if(clientsTab.isSelected()){
             System.out.println("KLAJENTS");
-
-            tabControllFlag = false;
         }
-        else
-            tabControllFlag = true;
     }
 
     @FXML
     public void handleOwnerClicked() {
-        if(tabControllFlag) {
+        if(ownerTab.isSelected()){
             System.out.println("OŁNER");
-            tabControllFlag = false;
         }
-        else
-            tabControllFlag = true;
     }
 }

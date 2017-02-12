@@ -7,6 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Invoice {
     StringProperty ID;
@@ -57,6 +60,27 @@ public class Invoice {
     public void addPosition(InvoicePosition position){
         this.positions.add(position);
     }
+
+    private List<Double> taxesDistinct(){
+        return positions.stream().mapToDouble(position -> position.getTax()).distinct().boxed().sorted().collect(Collectors.toList());
+    }
+
+    private List<InvoicePosition> positionsOfTax( Double tax){
+        return positions.stream().filter(position -> tax.equals(position.getTax())).collect(Collectors.toList());
+    }
+
+    private Double nettoTaxSum(Double tax){
+         return positionsOfTax(tax).stream().mapToDouble(invPos -> invPos.getNettoPrice()).sum();
+    }
+
+    private Double bruttoTaxSum(Double tax){
+        return positionsOfTax(tax).stream().mapToDouble(invPos -> invPos.getBruttoValue()).sum();
+    }
+
+    public List<List<Double>> taxesValueSum(){
+        return taxesDistinct().stream().map( tax -> Arrays.asList(tax, nettoTaxSum(tax), bruttoTaxSum(tax)) ).collect(Collectors.toList());
+    }
+
 //-----------------------------------------
 //
 //setters and getters
