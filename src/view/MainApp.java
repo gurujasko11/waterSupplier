@@ -53,6 +53,10 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("basicView.fxml"));
             TabPane BasicLayout = (TabPane)loader.load();
 
+
+            BasicViewController controller = loader.getController();
+            controller.setMainApp(this);
+
             rootLayout.setCenter(BasicLayout);
 
             primaryStage.close();
@@ -60,51 +64,25 @@ public class MainApp extends Application {
             primaryStage.setTitle("Welcome");
             primaryStage.show();
 
-            BasicViewController controller = loader.getController();
-            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void showClientsView(){
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("clients.fxml"));
-            TabPane BasicLayout = (TabPane)loader.load();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("clients.fxml"));
 
-            rootLayout.setCenter(BasicLayout);
-
-            primaryStage.close();
-            rootLayout.setPrefSize(BasicLayout.getPrefWidth(), BasicLayout.getPrefHeight());
-            primaryStage.setTitle("Welcome");
-            primaryStage.show();
-
-            BasicViewController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        BasicViewController controller = loader.getController();
+        controller.setMainApp(this);
     }
 
     public void showOwnerView(){
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("owner.fxml"));
-            TabPane BasicLayout = (TabPane)loader.load();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("owner.fxml"));
 
-            rootLayout.setCenter(BasicLayout);
-
-            primaryStage.close();
-            rootLayout.setPrefSize(BasicLayout.getPrefWidth(), BasicLayout.getPrefHeight());
-            primaryStage.setTitle("Welcome");
-            primaryStage.show();
-
-            BasicViewController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        BasicViewController controller = loader.getController();
+        controller.setMainApp(this);
     }
 
     public static void main(String[] args) {

@@ -7,6 +7,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.*;
 
@@ -24,9 +25,17 @@ public class BasicViewController {
         this.mainApp = mainApp;
     }
 
-    public boolean tabControllFlag = true;
-    //flaga jest dlatego, ze klikajac na tab wywolywana jest ta sama funkcja ktora wywoluje
-    //sie przy wyjsciu z tego taba i trzeba odrozniac te sytuacje
+    @FXML
+    private AnchorPane clients;
+
+    @FXML
+    private ClientsController clientsController;
+
+    @FXML
+    private AnchorPane owner;
+
+    @FXML
+    private OwnerController ownerController;
 
     @FXML
     Tab clientsTab;
@@ -36,28 +45,26 @@ public class BasicViewController {
 
     @FXML
     public void initialize(){
-
+        System.out.println(ownerController);
+        System.out.println(clientsController);
     }
 
     @FXML
     public void handleClientsClicked() {
         //odpalam w main app ClientsController
-        if(tabControllFlag) {
+        System.out.println(mainApp);
+        if(clientsTab.isSelected()){
             System.out.println("KLAJENTS");
-
-            tabControllFlag = false;
+//            mainApp.showClientsView();
         }
-        else
-            tabControllFlag = true;
     }
 
     @FXML
     public void handleOwnerClicked() {
-        if(tabControllFlag) {
+        if(ownerTab.isSelected()) {
             System.out.println("OŁNER");
-            tabControllFlag = false;
+            ownerController.setMainApp(mainApp);
+//            mainApp.showOwnerView();
         }
-        else
-            tabControllFlag = true;
     }
 }
