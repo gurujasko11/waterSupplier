@@ -37,12 +37,6 @@ public class BasicViewController {
     private OwnerController ownerController;
 
     @FXML
-    Tab clientsTab;
-
-    @FXML
-    private ClientsController clientsController;
-
-    @FXML
     Tab ownerTab;
 
     @FXML
