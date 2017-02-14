@@ -19,7 +19,6 @@ import java.io.IOException;
 public class BasicViewController {
 
     MainApp mainApp;
-    Stage dialogStage;
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -39,6 +38,9 @@ public class BasicViewController {
 
     @FXML
     Tab clientsTab;
+
+    @FXML
+    private ClientsController clientsController;
 
     @FXML
     Tab ownerTab;
