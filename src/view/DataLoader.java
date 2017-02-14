@@ -1,5 +1,7 @@
 package view;
 
+import model.Owner;
+
 import java.io.*;
 import java.util.Collection;
 
@@ -39,6 +41,21 @@ public class DataLoader {
         saveTypeToCollection(new File("clients.dat"),mainApp.getClients());
     }
 
+    public void saveOwnerData() throws IOException {
+        File file = new File("owner.dat");
+        FileOutputStream fos = new FileOutputStream(file);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        oos.writeObject(Owner.getInstance());
+        fos.close();
+    }
+
+    public void loadOwnerData() throws IOException, ClassNotFoundException {
+        File file = new File("owner.dat");
+        FileInputStream fos = new FileInputStream(file);
+        ObjectInputStream oos = new ObjectInputStream(fos);
+        System.out.println(oos.readObject());
+    }
     public void load() throws IOException, ClassNotFoundException {
         loadTypeFromCollection(new File("clients.dat"),mainApp.getClients());
     }

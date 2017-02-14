@@ -24,6 +24,7 @@ public class MainApp extends Application {
     private transient Stage primaryStage;
     private transient BorderPane rootLayout = new BorderPane();
     public ObservableList<Client> clients = FXCollections.observableArrayList();
+    public DataLoader dataLoader;
 
 //    public DataBase db = null;
 
@@ -31,8 +32,9 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
         this.primaryStage = primaryStage;
-        DataLoader dl = new DataLoader(this);
-        dl.load();
+        dataLoader = new DataLoader(this);
+        dataLoader.load();
+        dataLoader.loadOwnerData();
 //        testLoader.load(this);
 //        Adress add = new Adress("jana",3,4,"pc","krakow");
 //        clients.add(new Person(add,add,"daniel@slaby.com","2234","Daniel","Slaby"));
@@ -56,6 +58,8 @@ public class MainApp extends Application {
 
             BasicViewController controller = loader.getController();
             controller.setMainApp(this);
+            controller.getClientsController().setMainApp(this);
+            controller.getOwnerController().setMainApp(this);
 
             rootLayout.setCenter(BasicLayout);
 

@@ -45,26 +45,13 @@ public class BasicViewController {
 
     @FXML
     public void initialize(){
-        System.out.println(ownerController);
-        System.out.println(clientsController);
     }
 
-    @FXML
-    public void handleClientsClicked() {
-        //odpalam w main app ClientsController
-        System.out.println(mainApp);
-        if(clientsTab.isSelected()){
-            System.out.println("KLAJENTS");
-//            mainApp.showClientsView();
-        }
+    public ClientsController getClientsController() {
+        return clientsController;
     }
 
-    @FXML
-    public void handleOwnerClicked() {
-        if(ownerTab.isSelected()) {
-            System.out.println("OŁNER");
-            ownerController.setMainApp(mainApp);
-//            mainApp.showOwnerView();
-        }
+    public OwnerController getOwnerController() {
+        return ownerController;
     }
 }
