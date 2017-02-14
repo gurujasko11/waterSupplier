@@ -24,6 +24,7 @@ public class MainApp extends Application {
     private transient Stage primaryStage;
     private transient BorderPane rootLayout = new BorderPane();
     public ObservableList<Client> clients = FXCollections.observableArrayList();
+    public DataLoader dataLoader;
 
 //    public DataBase db = null;
 
@@ -31,8 +32,9 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
         this.primaryStage = primaryStage;
-        DataLoader dl = new DataLoader(this);
-        dl.load();
+        dataLoader = new DataLoader(this);
+        dataLoader.load();
+        dataLoader.loadOwnerData();
 //        testLoader.load(this);
 //        Adress add = new Adress("jana",3,4,"pc","krakow");
 //        clients.add(new Person(add,add,"daniel@slaby.com","2234","Daniel","Slaby"));
@@ -53,6 +55,12 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("basicView.fxml"));
             TabPane BasicLayout = (TabPane)loader.load();
 
+
+            BasicViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.getClientsController().setMainApp(this);
+            controller.getOwnerController().setMainApp(this);
+
             rootLayout.setCenter(BasicLayout);
 
             primaryStage.close();
@@ -60,51 +68,25 @@ public class MainApp extends Application {
             primaryStage.setTitle("Welcome");
             primaryStage.show();
 
-            BasicViewController controller = loader.getController();
-            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void showClientsView(){
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("clients.fxml"));
-            TabPane BasicLayout = (TabPane)loader.load();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("clients.fxml"));
 
-            rootLayout.setCenter(BasicLayout);
-
-            primaryStage.close();
-            rootLayout.setPrefSize(BasicLayout.getPrefWidth(), BasicLayout.getPrefHeight());
-            primaryStage.setTitle("Welcome");
-            primaryStage.show();
-
-            BasicViewController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        BasicViewController controller = loader.getController();
+        controller.setMainApp(this);
     }
 
     public void showOwnerView(){
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("owner.fxml"));
-            TabPane BasicLayout = (TabPane)loader.load();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("owner.fxml"));
 
-            rootLayout.setCenter(BasicLayout);
-
-            primaryStage.close();
-            rootLayout.setPrefSize(BasicLayout.getPrefWidth(), BasicLayout.getPrefHeight());
-            primaryStage.setTitle("Welcome");
-            primaryStage.show();
-
-            BasicViewController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        BasicViewController controller = loader.getController();
+        controller.setMainApp(this);
     }
 
     public static void main(String[] args) {

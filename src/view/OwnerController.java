@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Owner;
 
+import java.io.IOException;
+
 /**
  * Created by busz on 11.02.17.
  */
@@ -46,16 +48,70 @@ public class OwnerController {
          postalCode.setText(Owner.getInstance().getAdress().getPostalCode());
          city.setText(Owner.getInstance().getAdress().getCity());
 
-        name.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setName(newValue); });
-        NIP.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setNIP(newValue); });
-        bankName.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setBankName(newValue); });
-        accountNumber.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setAccountNumber(newValue); });
+        name.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setName(newValue);
+            try {
+                mainApp.dataLoader.saveOwnerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        NIP.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setNIP(newValue);
+                try {
+                mainApp.dataLoader.saveOwnerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        bankName.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setBankName(newValue);
+            try {
+                mainApp.dataLoader.saveOwnerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        accountNumber.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setAccountNumber(newValue);
+            try {
+                mainApp.dataLoader.saveOwnerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
-        street.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setStreet(newValue); });
-        homeNumber.textProperty().addListener((item, oldValue, newValue) -> { Owner.getInstance().getAdress().setHomeNumber(Integer.parseInt(newValue)); });
-        flatNumber.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setFlatNumber(Integer.parseInt(newValue)); });
-        postalCode.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setPostalCode(newValue); });
-        city.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setCity(newValue); });
+        street.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setStreet(newValue);
+            try {
+                mainApp.dataLoader.saveOwnerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        homeNumber.textProperty().addListener((item, oldValue, newValue) -> { Owner.getInstance().getAdress().setHomeNumber(Integer.parseInt(newValue));
+            try {
+                mainApp.dataLoader.saveOwnerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        flatNumber.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setFlatNumber(Integer.parseInt(newValue));
+            try {
+                mainApp.dataLoader.saveOwnerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        postalCode.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setPostalCode(newValue);
+            try {
+                mainApp.dataLoader.saveOwnerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        city.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setCity(newValue);
+            try {
+                mainApp.dataLoader.saveOwnerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void setMainApp(MainApp mainApp) {

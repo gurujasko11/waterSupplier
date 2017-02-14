@@ -3,8 +3,11 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public enum Owner{
-    INSTANCE();
+import java.io.*;
+
+public enum Owner implements Serializable {
+    INSTANCE() {
+    };
 
     Adress adress;
     StringProperty name;
