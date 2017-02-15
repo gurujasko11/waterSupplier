@@ -1,8 +1,10 @@
 package view;
 
+import model.Adress;
 import model.Owner;
 
 import java.io.*;
+import java.nio.file.NoSuchFileException;
 import java.util.Collection;
 
 /**
@@ -26,15 +28,17 @@ public class DataLoader {
 
     public <T extends Externalizable, Cloneable> void loadTypeFromCollection(File file, Collection<T> collection) throws IOException, ClassNotFoundException {
         collection.clear();
-        FileInputStream fos = new FileInputStream(file);
-        ObjectInputStream oos = new ObjectInputStream(fos);
+        if(file.exists()){
+            FileInputStream fos = new FileInputStream(file);
+            ObjectInputStream oos = new ObjectInputStream(fos);
 
-        while(fos.available() > 0) {
+            while(fos.available() > 0) {
 //            T x =
 //            x.readExternal(oos);
-            collection.add((T)oos.readObject());
+                collection.add((T)oos.readObject());
+            }
+            fos.close();
         }
-        fos.close();
     }
 
     public void save() throws IOException {
@@ -46,17 +50,31 @@ public class DataLoader {
         FileOutputStream fos = new FileOutputStream(file);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-        oos.writeObject(Owner.getInstance());
+        oos.writeObject(Owner.getInstance().getAdress());
+        oos.writeObject(Owner.getInstance().getName());
+        oos.writeObject(Owner.getInstance().getNIP());
+        oos.writeObject(Owner.getInstance().getBankName());
+        oos.writeObject(Owner.getInstance().getAccountNumber());
+
         fos.close();
     }
 
     public void loadOwnerData() throws IOException, ClassNotFoundException {
         File file = new File("owner.dat");
-        FileInputStream fos = new FileInputStream(file);
-        ObjectInputStream oos = new ObjectInputStream(fos);
-        System.out.println(oos.readObject());
+        if(file.exists()){
+            FileInputStream fos = new FileInputStream(file);
+            ObjectInputStream oos = new ObjectInputStream(fos);
+
+            Owner.getInstance().setAdress((Adress)oos.readObject());
+            Owner.getInstance().setName((String)oos.readObject());
+            Owner.getInstance().setNIP((String)oos.readObject());
+            Owner.getInstance().setBankName((String)oos.readObject());
+            Owner.getInstance().setAccountNumber((String)oos.readObject());
+        }
     }
     public void load() throws IOException, ClassNotFoundException {
-        loadTypeFromCollection(new File("clients.dat"),mainApp.getClients());
+        File f = new File("clients.dat");
+        loadTypeFromCollection(f,mainApp.getClients());
+        loadOwnerData();
     }
 }
