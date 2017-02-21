@@ -18,6 +18,9 @@ public class Invoice {
     StringProperty issuePlace;
     Client client;
     ObservableList<InvoicePosition> positions;
+    Double prepayment;
+    LocalDate paymentDate;
+    String paymentForm;
 //-----------------------------------------
 //
 //constructors
@@ -140,5 +143,29 @@ public class Invoice {
 
     public void setID(String ID) {
         this.ID.set(ID);
+    }
+
+    public Double getPrepayment() {
+        return prepayment;
+    }
+
+    public void setPrepayment(Double prepayment) {
+        this.prepayment = prepayment;
+    }
+
+    public LocalDate getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getPaymentForm() {
+        return paymentForm;
+    }
+
+    public void setPaymentForm(String paymentForm) {
+        this.paymentForm = paymentForm;
     }
 }
