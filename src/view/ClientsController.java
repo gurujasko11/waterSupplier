@@ -99,12 +99,19 @@ public class ClientsController {
                 businessList.getSelectionModel().getSelectedItems().isEmpty() )
             return;
         //przypadek kiedy nic nie jest wybrane
+        System.out.println(tmp);
         mainApp.showAddClient(tmp);
         DataLoader dl = new DataLoader(mainApp);
         dl.save();
         refresh();
         showClient(tmp);
+    }
 
+    @FXML
+    public void handleCreateInvoice() {
+        if(currentClient != null) {
+            mainApp.showCreateInvoice(currentClient);
+        }
     }
 
     private void showClient(Client client) {

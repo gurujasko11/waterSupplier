@@ -37,16 +37,16 @@ public class OwnerController {
 
     @FXML
     public void initialize(){
-         name.setText(Owner.getInstance().getName());
-         NIP.setText(Owner.getInstance().getNIP());
-         bankName.setText(Owner.getInstance().getBankName());
-         accountNumber.setText(Owner.getInstance().getAccountNumber());
+        name.setText(Owner.getInstance().getName());
+        NIP.setText(Owner.getInstance().getNIP());
+        bankName.setText(Owner.getInstance().getBankName());
+        accountNumber.setText(Owner.getInstance().getAccountNumber());
 
-         street.setText(Owner.getInstance().getAdress().getStreet());
-         homeNumber.setText(String.valueOf(Owner.getInstance().getAdress().getHomeNumber()));
-         flatNumber.setText(String.valueOf(Owner.getInstance().getAdress().getFlatNumber()));
-         postalCode.setText(Owner.getInstance().getAdress().getPostalCode());
-         city.setText(Owner.getInstance().getAdress().getCity());
+        street.setText(Owner.getInstance().getAdress().getStreet());
+        homeNumber.setText(String.valueOf(Owner.getInstance().getAdress().getHomeNumber()));
+        flatNumber.setText(String.valueOf(Owner.getInstance().getAdress().getFlatNumber()));
+        postalCode.setText(Owner.getInstance().getAdress().getPostalCode());
+        city.setText(Owner.getInstance().getAdress().getCity());
 
         name.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setName(newValue);
             try {
@@ -56,7 +56,7 @@ public class OwnerController {
             }
         });
         NIP.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().setNIP(newValue);
-                try {
+            try {
                 mainApp.dataLoader.saveOwnerData();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -84,14 +84,14 @@ public class OwnerController {
                 e.printStackTrace();
             }
         });
-        homeNumber.textProperty().addListener((item, oldValue, newValue) -> { Owner.getInstance().getAdress().setHomeNumber(Integer.parseInt(newValue));
+        homeNumber.textProperty().addListener((item, oldValue, newValue) -> { Owner.getInstance().getAdress().setHomeNumber(newValue);
             try {
                 mainApp.dataLoader.saveOwnerData();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-        flatNumber.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setFlatNumber(Integer.parseInt(newValue));
+        flatNumber.textProperty().addListener((item,oldValue,newValue) -> { Owner.getInstance().getAdress().setFlatNumber(newValue);
             try {
                 mainApp.dataLoader.saveOwnerData();
             } catch (IOException e) {
