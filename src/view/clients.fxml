@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="472.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ClientsController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="533.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ClientsController">
    <children>
       <GridPane layoutX="221.0" layoutY="180.0" prefHeight="450.0" prefWidth="642.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>

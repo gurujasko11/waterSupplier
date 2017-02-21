@@ -60,6 +60,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
             controller.getClientsController().setMainApp(this);
             controller.getOwnerController().setMainApp(this);
+            controller.getAccessoriesController().setMainApp(this);
 
             rootLayout.setCenter(BasicLayout);
 
@@ -84,6 +85,14 @@ public class MainApp extends Application {
     public void showOwnerView(){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MainApp.class.getResource("owner.fxml"));
+
+        BasicViewController controller = loader.getController();
+        controller.setMainApp(this);
+    }
+
+    public void showAccessoriesView(){
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("accessories.fxml"));
 
         BasicViewController controller = loader.getController();
         controller.setMainApp(this);

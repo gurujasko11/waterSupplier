@@ -37,10 +37,16 @@ public class BasicViewController {
     private OwnerController ownerController;
 
     @FXML
+    private AccessoriesController accessoriesController;
+
+    @FXML
     Tab clientsTab;
-  
+
     @FXML
     Tab ownerTab;
+
+    @FXML
+    Tab accessoriesTab;
 
     @FXML
     public void initialize(){
@@ -53,4 +59,6 @@ public class BasicViewController {
     public OwnerController getOwnerController() {
         return ownerController;
     }
+
+    public AccessoriesController getAccessoriesController() {return accessoriesController;}
 }

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 
-<TabPane prefHeight="472.0" prefWidth="374.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BasicViewController">
+<TabPane prefHeight="472.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BasicViewController">
     <tabs>
         <Tab fx:id="clientsTab" text="klienci">
             <content>
@@ -13,6 +13,11 @@
         <Tab fx:id="ownerTab" text="moje dane">
             <content>
                 <fx:include fx:id="owner" source="owner.fxml" />
+            </content>
+        </Tab>
+        <Tab fx:id="accessoriesTab" text="dodatki">
+            <content>
+                <fx:include fx:id="accessories" source="accessories.fxml" />
             </content>
         </Tab>
     </tabs>
