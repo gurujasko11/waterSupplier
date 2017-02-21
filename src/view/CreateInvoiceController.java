@@ -7,6 +7,7 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
@@ -17,16 +18,18 @@ import model.*;
  * Created by busz on 08.02.17.
  */
 public class CreateInvoiceController {
-
+    
+    MainApp mainApp;
+    Stage dialogStage;
+    Client client ;
+    Invoice invoice;
+    
     @FXML
     Label ownerName;
     @FXML
     Label ownerAddress;
     @FXML
     Label ownerNip;
-
-    Client client ;
-    Invoice invoice;
 
     @FXML
     TextField invoiceNumber;
@@ -86,20 +89,7 @@ public class CreateInvoiceController {
     @FXML
     public void initialize(){
         showOwner();
-        this.client = new Person(
-                    new Adress("ul. Dostawy", 35,5,"31-313","Krakow"),
-                    new Adress("ul. Zamieszkania", 36,1,"31-111","Krakow"),
-                    "email@mail.com",
-                    "501-502-500",
-                    "TestoweImie",
-                    "TestoweNazwisko"
-                );
-        this.invoice = new Invoice(this.client);
-        showClient();
-        showInvoiceDetails();
         paymentForm.setText("przelew");
-        initPositionsTable();
-        initPayment();
     }
 
     public CreateInvoiceController(){
@@ -230,8 +220,25 @@ public class CreateInvoiceController {
         if(!DateUtil.validDate(issueDate.getText())) return false;
         if(!DateUtil.validDate(saleDate.getText())) return false;
         if(issuePlace.getText().isEmpty()) return false;
-        if(DecimalUtil.validDecimal(prepayment.getText())) return false;
         return true;
+    }
+
+
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+        this.invoice = new Invoice(client);
+        showClient();
+        showInvoiceDetails();
+        initPositionsTable();
+        initPayment();
+    }
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
     }
 }
 

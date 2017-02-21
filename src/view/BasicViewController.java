@@ -38,7 +38,7 @@ public class BasicViewController {
 
     @FXML
     Tab clientsTab;
-
+  
     @FXML
     Tab ownerTab;
 

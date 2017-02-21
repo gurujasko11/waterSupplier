@@ -34,7 +34,7 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         dataLoader = new DataLoader(this);
         dataLoader.load();
-        dataLoader.loadOwnerData();
+//        dataLoader.loadOwnerData();
 //        testLoader.load(this);
 //        Adress add = new Adress("jana",3,4,"pc","krakow");
 //        clients.add(new Person(add,add,"daniel@slaby.com","2234","Daniel","Slaby"));
@@ -122,6 +122,31 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void showCreateInvoice(Client client) {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("createInvoice.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("faktura");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            CreateInvoiceController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setDialogStage(dialogStage);
+            controller.setClient(client);
+
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
