@@ -141,8 +141,8 @@ public class addClientController {
         Adress add = bus.getMainAdress();
         add.setCity(city.getText());
         if(!flatNumber.getText().isEmpty())
-            add.setFlatNumber(Integer.parseInt(flatNumber.getText()));
-        add.setHomeNumber(Integer.parseInt(houseNumber.getText()));
+            add.setFlatNumber(flatNumber.getText());
+        add.setHomeNumber(houseNumber.getText());
         add.setPostalCode(zipCode.getText());
         add.setStreet(street.getText());
     }
@@ -156,8 +156,8 @@ public class addClientController {
         Adress add = bus.getMainAdress();
         add.setCity(city.getText());
         if(!flatNumber.getText().isEmpty())
-            add.setFlatNumber(Integer.parseInt(flatNumber.getText()));
-        add.setHomeNumber(Integer.parseInt(houseNumber.getText()));
+            add.setFlatNumber(flatNumber.getText());
+        add.setHomeNumber(houseNumber.getText());
         add.setPostalCode(zipCode.getText());
         add.setStreet(street.getText());
     }
@@ -167,15 +167,15 @@ public class addClientController {
         if(flatNumber.getText().isEmpty()) {
             add = new Adress(
                     street.getText(),
-                    Integer.parseInt(houseNumber.getText()),
+                    houseNumber.getText(),
                     zipCode.getText(),
                     city.getText());
         }
         else {
             add = new Adress(
                     street.getText(),
-                    Integer.parseInt(houseNumber.getText()),
-                    Integer.parseInt(flatNumber.getText()),
+                    houseNumber.getText(),
+                    flatNumber.getText(),
                     zipCode.getText(),
                     city.getText());
         }
@@ -194,15 +194,15 @@ public class addClientController {
         if(flatNumber.getText().isEmpty()) {
             add = new Adress(
                     street.getText(),
-                    Integer.parseInt(houseNumber.getText()),
+                    houseNumber.getText(),
                     zipCode.getText(),
                     city.getText());
         }
         else {
             add = new Adress(
                     street.getText(),
-                    Integer.parseInt(houseNumber.getText()),
-                    Integer.parseInt(flatNumber.getText()),
+                    houseNumber.getText(),
+                    flatNumber.getText(),
                     zipCode.getText(),
                     city.getText());
         }
@@ -249,8 +249,8 @@ public class addClientController {
             email.setText(client.getEmail());
             phone.setText(client.getPhone());
             street.setText(client.getMainAdress().getStreet());
-            houseNumber.setText(client.getMainAdress().homeNumberProperty().getValue().toString());
-            flatNumber.setText(client.getMainAdress().flatNumberProperty().getValue().toString());
+            houseNumber.setText(client.getMainAdress().homeNumberProperty().getValue());
+            flatNumber.setText(client.getMainAdress().flatNumberProperty().getValue());
             zipCode.setText(client.getMainAdress().getPostalCode());
             city.setText(client.getMainAdress().getCity());
             this.client = client;

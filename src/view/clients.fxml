@@ -131,7 +131,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="wystaw fakture">
+                  <Button mnemonicParsing="false" onAction="#handleCreateInvoice" text="wystaw fakture">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>

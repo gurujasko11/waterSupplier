@@ -76,5 +76,6 @@ public class DataLoader {
         File f = new File("clients.dat");
         loadTypeFromCollection(f,mainApp.getClients());
         loadOwnerData();
+//        mainApp.clients.addAll(FileLoader.readFromFile("lista.csv"));
     }
 }

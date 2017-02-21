@@ -12,8 +12,8 @@ import java.io.ObjectOutput;
 
 public class Adress implements Externalizable{
     StringProperty street;
-    IntegerProperty homeNumber;
-    IntegerProperty flatNumber;
+    StringProperty homeNumber;
+    StringProperty flatNumber;
     StringProperty postalCode;
     StringProperty city;
 
@@ -25,21 +25,21 @@ public class Adress implements Externalizable{
 
     public Adress() {
         this.street = new SimpleStringProperty();
-        this.homeNumber = new SimpleIntegerProperty();
-        this.flatNumber = new SimpleIntegerProperty();
+        this.homeNumber = new SimpleStringProperty();
+        this.flatNumber = new SimpleStringProperty();
         this.postalCode = new SimpleStringProperty();
         this.city = new SimpleStringProperty();
     }
 
-    public Adress(String street, Integer homeNumber, String postalCode, String city) {
+    public Adress(String street, String homeNumber, String postalCode, String city) {
         this.street = new SimpleStringProperty(street);
-        this.homeNumber = new SimpleIntegerProperty(homeNumber);
-        this.flatNumber = new SimpleIntegerProperty();
+        this.homeNumber = new SimpleStringProperty(homeNumber);
+        this.flatNumber = new SimpleStringProperty();
         this.postalCode = new SimpleStringProperty(postalCode);
         this.city = new SimpleStringProperty(city);
     }
 
-    public Adress(String street, Integer homeNumber, Integer flatNumber, String postalCode, String city) {
+    public Adress(String street, String homeNumber, String flatNumber, String postalCode, String city) {
         this(street, homeNumber, postalCode, city);
         this.flatNumber.setValue(flatNumber);
     }
@@ -84,27 +84,27 @@ public class Adress implements Externalizable{
         this.street.set(street);
     }
 
-    public int getHomeNumber() {
+    public String getHomeNumber() {
         return homeNumber.get();
     }
 
-    public IntegerProperty homeNumberProperty() {
+    public StringProperty homeNumberProperty() {
         return homeNumber;
     }
 
-    public void setHomeNumber(int homeNumber) {
+    public void setHomeNumber(String homeNumber) {
         this.homeNumber.set(homeNumber);
     }
 
-    public int getFlatNumber() {
+    public String getFlatNumber() {
         return flatNumber.get();
     }
 
-    public IntegerProperty flatNumberProperty() {
+    public StringProperty flatNumberProperty() {
         return flatNumber;
     }
 
-    public void setFlatNumber(int flatNumber) {
+    public void setFlatNumber(String flatNumber) {
         this.flatNumber.set(flatNumber);
     }
 
@@ -146,7 +146,7 @@ public class Adress implements Externalizable{
         city.setValue((String)in.readObject());
         postalCode.setValue((String)in.readObject());
         street.setValue((String)in.readObject());
-        homeNumber.setValue((Integer)in.readObject());
-        flatNumber.setValue((Integer)in.readObject());
+        homeNumber.setValue((String)in.readObject());
+        flatNumber.setValue((String)in.readObject());
     }
 }
