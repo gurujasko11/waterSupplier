@@ -12,6 +12,7 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
 
+import java.io.IOException;
 
 
 /**
@@ -23,7 +24,7 @@ public class CreateInvoiceController {
     Stage dialogStage;
     Client client ;
     Invoice invoice;
-    
+
     @FXML
     Label ownerName;
     @FXML
@@ -223,7 +224,6 @@ public class CreateInvoiceController {
         return true;
     }
 
-
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
@@ -239,6 +239,19 @@ public class CreateInvoiceController {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+    }
+
+    public void handleGenerete() throws IOException {
+        if(isValid()){
+            invoice.setID( invoiceNumber.getText() );
+            invoice.setIssueDate(DateUtil.parse(issueDate.getText()));
+            invoice.setSaleDate(DateUtil.parse(saleDate.getText()));
+            invoice.setIssuePlace(issuePlace.getText());
+            invoice.setPaymentForm(paymentForm.getText());
+            invoice.setPaymentDate(paymentDate.getValue());
+            invoice.setPrepayment(Double.parseDouble(prepayment.getText()));
+            Generator.generate(invoice);
+        }
     }
 }
 

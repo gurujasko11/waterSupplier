@@ -376,7 +376,7 @@
                   <ButtonBar prefHeight="27.0" prefWidth="182.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <buttons>
                       <Button mnemonicParsing="false" text="Anuluj" />
-                        <Button mnemonicParsing="false" text="Wystaw" />
+                        <Button mnemonicParsing="false" onAction="#handleGenerete" text="Wystaw" />
                     </buttons>
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="20.0" top="5.0" />
