@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
@@ -91,6 +92,7 @@ public class CreateInvoiceController {
     public void initialize(){
         showOwner();
         paymentForm.setText("przelew");
+        payment.setText("0.00");
     }
 
     public CreateInvoiceController(){
@@ -132,8 +134,8 @@ public class CreateInvoiceController {
     public void initPositionsTable(){
         positionsTable.setItems(invoice.getPositions());
         positionsTable.setEditable(true);
-                lpColumn.setCellFactory( cell ->
-                        new TableCell(){
+        lpColumn.setCellFactory( cell ->
+                new TableCell(){
                     @Override
                         public void updateItem( Object item, boolean empty )
                         {
@@ -145,23 +147,23 @@ public class CreateInvoiceController {
             );
 
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setCellFactory(CellFactory.getCell());
         nameColumn.setOnEditCommit( t ->
                 ((InvoicePosition) t.getTableView().getItems().get(t.getTablePosition().getRow())).setName(t.getNewValue()));
         nettoPriceColumn.setCellValueFactory(cellData -> cellData.getValue().nettoPriceProperty().asObject());
-        nettoPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        nettoPriceColumn.setCellFactory(CellFactory.getCell(new DoubleStringConverter()));
         nettoPriceColumn.setOnEditCommit( t -> {
                     ((InvoicePosition) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNettoPrice(t.getNewValue().doubleValue());
                     t.getTableView().refresh();
                 });
         quantityColumn.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
-        quantityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        quantityColumn.setCellFactory(CellFactory.getCell(new IntegerStringConverter()));
         quantityColumn.setOnEditCommit( t -> {
                     ((InvoicePosition) t.getTableView().getItems().get(t.getTablePosition().getRow())).setQuantity(t.getNewValue().intValue());
                     t.getTableView().refresh();
                 });
         taxColumn.setCellValueFactory(cellData -> cellData.getValue().taxProperty().asObject());
-        taxColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        taxColumn.setCellFactory(CellFactory.getCell(new DoubleStringConverter()));
         taxColumn.setOnEditCommit(
                 t -> {
                     ((InvoicePosition) t.getTableView().getItems().get(t.getTablePosition().getRow())).setTax(t.getNewValue().doubleValue());
@@ -251,6 +253,7 @@ public class CreateInvoiceController {
             invoice.setPaymentDate(paymentDate.getValue());
             invoice.setPrepayment(Double.parseDouble(prepayment.getText()));
             Generator.generate(invoice);
+            dialogStage.close();
         }
     }
 }

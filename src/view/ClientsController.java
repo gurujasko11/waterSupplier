@@ -132,6 +132,12 @@ public class ClientsController {
         refresh();
     }
 
+    public void handleCreateInvoice() {
+        if(currentClient != null) {
+            mainApp.showCreateInvoice(currentClient);
+        }
+    }
+
     public void refresh() {
         personList.refresh();
         businessList.refresh();
