@@ -4,6 +4,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Bussiness;
 import model.Client;
@@ -18,6 +19,9 @@ import java.io.IOException;
 public class ClientsController {
     MainApp mainApp;
     Stage dialogStage;
+
+    @FXML
+    TextField search;
 
     @FXML
     Label clientName;
@@ -46,6 +50,8 @@ public class ClientsController {
 
     FilteredList<Client> bussinesses;
 
+
+
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
         persons = new FilteredList<Client>(mainApp.getClients(), client -> client instanceof Person);
@@ -55,8 +61,22 @@ public class ClientsController {
         businessList.setItems(bussinesses);
         currentClient = null;
     }
+
+    public ClientsController(){
+
+    }
+
     @FXML
     public void initialize(){
+        search.textProperty().addListener( (item, oldValue, newValue) -> {
+            if(!newValue.isEmpty()) {
+                persons.setPredicate(client -> client instanceof Person && client.getClientName().contains(newValue));
+                bussinesses.setPredicate(client -> client instanceof Bussiness && client.getClientName().contains(newValue));
+            } else {
+                persons.setPredicate(client -> client instanceof Person);
+                bussinesses.setPredicate(client -> client instanceof Bussiness);
+            }
+        } );
         personList.setCellFactory( list -> new ClientCell());
         businessList.setCellFactory(list -> new ClientCell());
         personList.getSelectionModel().selectedItemProperty().addListener(
@@ -123,12 +143,6 @@ public class ClientsController {
         DataLoader dl = new DataLoader(mainApp);
         dl.save();
         refresh();
-    }
-
-    public void handleCreateInvoice() {
-        if(currentClient != null) {
-            mainApp.showCreateInvoice(currentClient);
-        }
     }
 
     public void refresh() {
