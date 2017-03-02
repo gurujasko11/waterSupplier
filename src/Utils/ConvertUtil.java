@@ -41,4 +41,8 @@ public class ConvertUtil {
         }
         return slownie;
     }
+
+    public static String NumToText(Double num) {
+        return NumToText(num.intValue()) + ((Double)((num*100)%100)).intValue() + "/100";
+    }
 }

@@ -1,23 +1,26 @@
 package model;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 
+import Utils.ConvertUtil;
 import Utils.DateUtil;
-import com.itextpdf.io.font.FontConstants;
+import Utils.DecimalUtil;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.border.Border;
 import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
+
 
 
 /**
@@ -28,18 +31,21 @@ public class Generator{
     public static String  DEST = "/home/busz/Dokumenty/PdfTest/";
 
     public static void generate(Invoice invoice) throws IOException {
-
-        FileOutputStream fos = new FileOutputStream(DEST + invoice.getClient().getInvoiceName() + "/" + invoice.getIssueDate() + ".pdf");
+        PdfFont font = PdfFontFactory.createFont("/home/busz/Dokumenty/PdfTest/NotCourierSans.otf",PdfEncodings.IDENTITY_H, true);
+        
+        File f = new File(DEST + invoice.getClient().getInvoiceName());
+        f.mkdirs();
+        FileOutputStream fos = new FileOutputStream(DEST + invoice.getClient().getInvoiceName()+ "/" + DateUtil.format(invoice.getIssueDate()) + ".pdf");
         PdfWriter writer = new PdfWriter(fos);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-        document.add(new Paragraph("Faktura Vat nr").setTextAlignment(TextAlignment.CENTER).setMargin(0).setBold().setFont(PdfFontFactory.createFont(FontConstants.COURIER)));
-        document.add(new Paragraph("oryginał").setFontSize(6).setTextAlignment(TextAlignment.CENTER).setMargin(0).setBold().setFont(PdfFontFactory.createFont(FontConstants.COURIER)));
+        document.add(new Paragraph("Faktura Vat nr").setTextAlignment(TextAlignment.CENTER).setMargin(0).setBold().setFont(font));
+        document.add(new Paragraph("oryginał").setFontSize(6).setTextAlignment(TextAlignment.CENTER).setMargin(0).setBold().setFont(font));
         document.add(new Paragraph("\n"));
 
         float datyWidths[] = {45 , 55};
-        Table daty = new Table(datyWidths).setFont(PdfFontFactory.createFont(FontConstants.COURIER)).setFontSize(8).setPadding(0).setHorizontalAlignment(HorizontalAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE).setWidthPercent(100).setBorder(Border.NO_BORDER);
+        Table daty = new Table(datyWidths).setFont(font).setFontSize(8).setPadding(0).setHorizontalAlignment(HorizontalAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE).setWidthPercent(100).setBorder(Border.NO_BORDER);
         daty.addCell(newDefaultCell().add("Data wystawienia:").setTextAlignment(TextAlignment.RIGHT).setBold());
         daty.addCell(newDefaultCell().add(DateUtil.format(invoice.getIssueDate())).setPadding(0).setBorder(Border.NO_BORDER));
         daty.addCell(newDefaultCell().add("Data sprzedaży:").setTextAlignment(TextAlignment.RIGHT).setBold());
@@ -49,7 +55,7 @@ public class Generator{
 
         float colWid[] = {5,45,40};
         Table logoIDaty = new Table(colWid).setBorder(Border.NO_BORDER);
-        logoIDaty.setWidthPercent(100).setTextAlignment(TextAlignment.LEFT).setFontSize(8).setFont(PdfFontFactory.createFont(FontConstants.COURIER));
+        logoIDaty.setWidthPercent(100).setTextAlignment(TextAlignment.LEFT).setFontSize(8).setFont(font);
         logoIDaty.addCell(newDefaultCell());
         logoIDaty.addCell(newDefaultCell().add(new Image(ImageDataFactory.create("/home/busz/Dokumenty/PdfTest/logo.jpg"))));
         logoIDaty.addCell(newDefaultCell().add(daty).setVerticalAlignment(VerticalAlignment.MIDDLE).setHorizontalAlignment(HorizontalAlignment.CENTER));
@@ -58,7 +64,7 @@ public class Generator{
         document.add(new Paragraph("\n"));
 
         float snWidths[] = {13,89};
-        Table sprzedawca = new Table (snWidths).setFontSize(8).setWidthPercent(100).setBorder(Border.NO_BORDER).setFont(PdfFontFactory.createFont(FontConstants.COURIER));
+        Table sprzedawca = new Table (snWidths).setFontSize(8).setWidthPercent(100).setBorder(Border.NO_BORDER).setFont(font);
         sprzedawca.addHeaderCell(new Cell(1,2).add("Sprzedawca").setBold().setBorder(Border.NO_BORDER));
         sprzedawca.addCell(newDefaultCell().add("Nazwa:").setTextAlignment(TextAlignment.RIGHT).setBold());
         sprzedawca.addCell(newDefaultCell().add("Asset International Sebastian Oleszczuk"));
@@ -72,7 +78,7 @@ public class Generator{
         String[] address = invoice.getClient().getMainAdress().toString().split(" ");
 
 
-        Table nabywca = new Table (snWidths).setFontSize(8).setWidthPercent(100).setBorder(Border.NO_BORDER).setFont(PdfFontFactory.createFont(FontConstants.COURIER));
+        Table nabywca = new Table (snWidths).setFontSize(8).setWidthPercent(100).setBorder(Border.NO_BORDER).setFont(font);
         nabywca.addHeaderCell(new Cell(1,2).add("Nabywca").setBorder(Border.NO_BORDER).setBold());
         nabywca.addCell(newDefaultCell().add("Nazwa:").setTextAlignment(TextAlignment.RIGHT).setBold());
         nabywca.addCell(newDefaultCell().add(invoice.getClient().getInvoiceName()));
@@ -91,16 +97,16 @@ public class Generator{
         document.add(sprzedawcaNabywca);
 
         float columnWidths[] = {5,35,10,10,10,10,10,10};
-        Table pozycje = new Table(columnWidths);
-        pozycje.setWidthPercent(100).setTextAlignment(TextAlignment.CENTER).setFontSize(8).setFont(PdfFontFactory.createFont(FontConstants.COURIER, PdfEncodings.UNICODE_BIG, true));
-        pozycje.addHeaderCell(new Cell().add("Lp.").setBold());
-        pozycje.addHeaderCell(new Cell().add("Nazwa towaru lub usługi").setBold());
-        pozycje.addHeaderCell(new Cell().add("Ilość").setBold());
-        pozycje.addHeaderCell(new Cell().add("Cena netto").setBold());
-        pozycje.addHeaderCell(new Cell().add("Stawka VAT").setBold());
-        pozycje.addHeaderCell(new Cell().add("Wartość netto").setBold());
-        pozycje.addHeaderCell(new Cell().add("Wartość VAT").setBold());
-        pozycje.addHeaderCell(new Cell().add("Wartość Brutto").setBold());
+        Table pozycje = new Table(columnWidths).setPadding(0);
+        pozycje.setWidthPercent(100).setTextAlignment(TextAlignment.CENTER).setFontSize(8).setFont(font);
+        pozycje.addHeaderCell(new Cell().add("Lp.").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Nazwa towaru lub usługi").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Ilość").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Cena netto").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Stawka VAT").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Wartość netto").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Wartość VAT").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Wartość Brutto").setBold().setPadding(0));
 
         int lp = 0;
         for (InvoicePosition pos : invoice.getPositions()) {
@@ -108,26 +114,26 @@ public class Generator{
         }
 
         pozycje.addCell(new Cell(1,8).setBorder(Border.NO_BORDER));
-        pozycje.addCell(new Cell(1,4).setBorder(Border.NO_BORDER));
 
         invoice.taxesValueSum().stream().forEach( taxList ->
-                pozycje.addCell(taxList.get(0).toString())
-                        .addCell(taxList.get(1).toString())
-                        .addCell((taxList.get(2)-taxList.get(1)) + "")
-                        .addCell(taxList.get(2).toString())
+                pozycje.addCell(new Cell(1,4).setBorder(Border.NO_BORDER))
+                        .addCell(DecimalUtil.format(taxList.get(0)))
+                        .addCell(DecimalUtil.format(taxList.get(1)))
+                        .addCell(DecimalUtil.format(taxList.get(2)-taxList.get(1)))
+                        .addCell(DecimalUtil.format(taxList.get(2)))
         );
 
         pozycje.addCell(new Cell(1,4).setBorder(Border.NO_BORDER));
         pozycje.addCell(new Cell().add("Razem").setBold())
-                .addCell(invoice.getNettoTotal().toString())
-                .addCell((invoice.getBruttoTotal()-invoice.getNettoTotal()) + "")
-                .addCell(invoice.getBruttoTotal().toString());
+                .addCell(DecimalUtil.format(invoice.getNettoTotal()))
+                .addCell(DecimalUtil.format(invoice.getBruttoTotal()-invoice.getNettoTotal()))
+                .addCell(DecimalUtil.format(invoice.getBruttoTotal()));
 
         document.add(new Paragraph("\n"));
         document.add(pozycje);
 
         float daneBankoweWidths[] = {20, 80};
-        Table daneBankowe = new Table(daneBankoweWidths).setFont(PdfFontFactory.createFont(FontConstants.COURIER)).setFontSize(10).setWidthPercent(60).setBorder(Border.NO_BORDER);
+        Table daneBankowe = new Table(daneBankoweWidths).setFont(font).setFontSize(10).setWidthPercent(60).setBorder(Border.NO_BORDER);
         daneBankowe.addCell(newDefaultCell().add("Bank:").setTextAlignment(TextAlignment.RIGHT).setBold());
         daneBankowe.addCell(newDefaultCell().add("ING BANK ŚLĄSKI"));
         daneBankowe.addCell(newDefaultCell().add("Nr konta:").setTextAlignment(TextAlignment.RIGHT).setBold());
@@ -136,19 +142,19 @@ public class Generator{
         document.add(new Paragraph("\n"));
         document.add(daneBankowe);
 
-        Table daneLewe = new Table(2).setFontSize(8).setFont(PdfFontFactory.createFont(FontConstants.COURIER)).setWidthPercent(80).setPadding(0).setBorder(Border.NO_BORDER);
+        Table daneLewe = new Table(2).setFontSize(8).setFont(font).setWidthPercent(80).setPadding(0).setBorder(Border.NO_BORDER);
         daneLewe.addCell(newDefaultCell().add("Forma platności:").setTextAlignment(TextAlignment.RIGHT).setBold());
         daneLewe.addCell(newDefaultCell().add(invoice.getPaymentForm()));
         daneLewe.addCell(newDefaultCell().add("Termin Platności:").setTextAlignment(TextAlignment.RIGHT).setBold());
         daneLewe.addCell(newDefaultCell().add(invoice.getPaymentDate().toString()));
 
-        Table danePrawe = new Table(2).setFontSize(8).setFont(PdfFontFactory.createFont(FontConstants.COURIER)).setWidthPercent(80).setHorizontalAlignment(HorizontalAlignment.RIGHT).setPadding(0).setBorder(Border.NO_BORDER);
+        Table danePrawe = new Table(2).setFontSize(8).setFont(font).setWidthPercent(80).setHorizontalAlignment(HorizontalAlignment.RIGHT).setPadding(0).setBorder(Border.NO_BORDER);
         danePrawe.addCell(newDefaultCell().add("Razem:").setTextAlignment(TextAlignment.RIGHT).setBold());
-        danePrawe.addCell(newDefaultCell().add(invoice.getBruttoTotal() + " zl"));
+        danePrawe.addCell(newDefaultCell().add(DecimalUtil.format(invoice.getBruttoTotal()) + " zl"));
         danePrawe.addCell(newDefaultCell().add("Przedpłata/Zaplacono:").setTextAlignment(TextAlignment.RIGHT).setBold());
-        danePrawe.addCell(newDefaultCell().add(invoice.getPrepayment() + " zl"));
+        danePrawe.addCell(newDefaultCell().add(DecimalUtil.format(invoice.getPrepayment()) + " zl"));
         danePrawe.addCell(newDefaultCell().add("Do zapłaty:").setTextAlignment(TextAlignment.RIGHT).setBold());
-        danePrawe.addCell(newDefaultCell().add((invoice.getBruttoTotal()-invoice.getPrepayment()) + " zl"));
+        danePrawe.addCell(newDefaultCell().add(DecimalUtil.format(invoice.getBruttoTotal()-invoice.getPrepayment()) + " zl"));
 
         Table daneKoncowe = new Table(2).setWidthPercent(100).setBorder(Border.NO_BORDER);
         daneKoncowe.addCell(new Cell().add(daneLewe).setBorder(Border.NO_BORDER));
@@ -157,13 +163,13 @@ public class Generator{
         document.add(new Paragraph("\n").setFontSize(5));
         document.add(daneKoncowe);
 
-        document.add(new Paragraph("Slownie:" + "osiemdzisiat osiem, 56/100\n").setFontSize(10).setFont(PdfFontFactory.createFont(FontConstants.COURIER)));
+        document.add(new Paragraph("Slownie:" + ConvertUtil.NumToText(invoice.getBruttoTotal()) + "\n").setFontSize(10).setFont(font));
 
         Table podpisy = new Table(2).setVerticalAlignment(VerticalAlignment.BOTTOM).setWidthPercent(100).setBorder(Border.NO_BORDER).setTextAlignment(TextAlignment.CENTER).setPadding(0);
         podpisy.addCell( newDefaultCell().add("...............................................................................").setFontSize(5));
         podpisy.addCell( newDefaultCell().add("...............................................................................").setFontSize(5));
-        podpisy.addCell( newDefaultCell().add("osoba upoważniona do wystawienia").setFontSize(5).setFont(PdfFontFactory.createFont(FontConstants.COURIER)));
-        podpisy.addCell( newDefaultCell().add("osoba upoważniona do odbioru").setFontSize(5).setFont(PdfFontFactory.createFont(FontConstants.COURIER)));
+        podpisy.addCell( newDefaultCell().add("osoba upoważniona do wystawienia").setFontSize(5).setFont(font));
+        podpisy.addCell( newDefaultCell().add("osoba upoważniona do odbioru").setFontSize(5).setFont(font));
         document.add(new Paragraph("\n"));
         document.add(podpisy);
 
@@ -176,15 +182,14 @@ public class Generator{
     }
 
     public static void addPosition(Table table, int lp, String nazwa, int ilosc, double cenaNetto, double vat){
-        DecimalFormat df = new DecimalFormat("#.##");
         table.addCell(String.valueOf(lp));
         table.addCell(nazwa);
         table.addCell(String.valueOf(ilosc));
-        table.addCell(String.valueOf(df.format(cenaNetto)));
-        table.addCell(String.valueOf(df.format(vat)));
-        table.addCell(String.valueOf(df.format(ilosc*cenaNetto)));
-        table.addCell(String.valueOf(df.format(ilosc*cenaNetto*vat)));
-        table.addCell(String.valueOf(df.format(ilosc*cenaNetto*(1+vat))));
+        table.addCell(String.valueOf(DecimalUtil.format(cenaNetto)));
+        table.addCell(String.valueOf(DecimalUtil.format(vat)));
+        table.addCell(String.valueOf(DecimalUtil.format(ilosc*cenaNetto)));
+        table.addCell(String.valueOf(DecimalUtil.format(ilosc*cenaNetto*vat)));
+        table.addCell(String.valueOf(DecimalUtil.format(ilosc*cenaNetto*(1+vat))));
     }
 
 
