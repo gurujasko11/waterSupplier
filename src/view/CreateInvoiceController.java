@@ -93,6 +93,7 @@ public class CreateInvoiceController {
         showOwner();
         paymentForm.setText("przelew");
         payment.setText("0.00");
+        issuePlace.setText("Kraków");
     }
 
     public CreateInvoiceController(){
@@ -116,6 +117,7 @@ public class CreateInvoiceController {
         saleDate.setText(DateUtil.format(invoice.getSaleDate()));
         prepayment.setText("0");
         paymentDate.setValue(invoice.getIssueDate().plusDays(14));
+        invoiceNumber.setText(invoice.getID());
     }
 
     public void selectTransferAsPaymentForm(){
@@ -223,6 +225,7 @@ public class CreateInvoiceController {
         if(!DateUtil.validDate(issueDate.getText())) return false;
         if(!DateUtil.validDate(saleDate.getText())) return false;
         if(issuePlace.getText().isEmpty()) return false;
+        if(Invoice.IDSet.contains(invoiceNumber.getText())) return false;
         return true;
     }
 
@@ -252,6 +255,8 @@ public class CreateInvoiceController {
             invoice.setPaymentForm(paymentForm.getText());
             invoice.setPaymentDate(paymentDate.getValue());
             invoice.setPrepayment(Double.parseDouble(prepayment.getText()));
+            invoice.setID(invoiceNumber.getText());
+            Invoice.IDSet.add(invoice.getID());
             Generator.generate(invoice);
             dialogStage.close();
         }

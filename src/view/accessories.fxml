@@ -33,6 +33,17 @@
                   <Button mnemonicParsing="false" onAction="#handleLoadClients" text="Wczytaj" />
                </children>
             </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Label text="zapis faktur" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <TextField fx:id="saveInvoicePath" />
+                  <Button mnemonicParsing="false" onAction="#handleSaveInvoicePath" text="Zapisz" />
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </children>

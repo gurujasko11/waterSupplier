@@ -6,9 +6,13 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Invoice {
@@ -21,13 +25,15 @@ public class Invoice {
     Double prepayment;
     LocalDate paymentDate;
     String paymentForm;
+    public static Set<String> IDSet = new HashSet<>();
+    public static Integer staticID = 1;
 //-----------------------------------------
 //
 //constructors
 //
 //-----------------------------------------
     public Invoice() {
-        ID = new SimpleStringProperty();
+        ID = new SimpleStringProperty(getNextID().toString()+"/"+ LocalDate.now().getYear() + "/A");
 
         issueDate = LocalDate.now();
         saleDate = issueDate;
@@ -82,6 +88,15 @@ public class Invoice {
 
     public List<List<Double>> taxesValueSum(){
         return taxesDistinct().stream().map( tax -> Arrays.asList(tax, nettoTaxSum(tax), bruttoTaxSum(tax)) ).collect(Collectors.toList());
+    }
+
+
+    public Integer getNextID() {
+        while (true) {
+            if(!IDSet.contains(++staticID)) {
+                return staticID;
+            }
+        }
     }
 
 //-----------------------------------------

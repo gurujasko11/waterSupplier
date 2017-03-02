@@ -35,7 +35,7 @@ public class Generator{
         
         File f = new File(DEST + invoice.getClient().getInvoiceName());
         f.mkdirs();
-        FileOutputStream fos = new FileOutputStream(DEST + invoice.getClient().getInvoiceName()+ "/" + DateUtil.format(invoice.getIssueDate()) + ".pdf");
+        FileOutputStream fos = new FileOutputStream(DEST + invoice.getClient().getInvoiceName()+ "/" + DateUtil.format(invoice.getIssueDate()) + "_" + invoice.getID() +".pdf");
         PdfWriter writer = new PdfWriter(fos);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);

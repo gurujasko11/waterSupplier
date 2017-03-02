@@ -3,6 +3,11 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Generator;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created by janusz on 21.02.17.
@@ -16,6 +21,9 @@ public class AccessoriesController {
     TextField loaderPath;
 
     @FXML
+    TextField saveInvoicePath;
+
+    @FXML
     private void handleLoadClients() {
         try {
             System.out.println(mainApp);
@@ -27,6 +35,13 @@ public class AccessoriesController {
         }
     }
 
+    @FXML
+    private void handleSaveInvoicePath() {
+        Path path = Paths.get(saveInvoicePath.getText());
+        if(new File(String.valueOf(path)).exists() == false)
+            return;//tu mozna cos wypisac, ze zla sciezka
+        Generator.DEST = path.toString();
+    }
     @FXML
     public void initialize(){
     }
