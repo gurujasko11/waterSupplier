@@ -338,7 +338,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Słownie:" GridPane.rowIndex="2">
+                        <Label text="Słownie:" visible="false" GridPane.rowIndex="2">
                            <font>
                               <Font size="11.0" />
                            </font>
@@ -346,7 +346,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="totalSentence" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="totalSentence" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="11.0" />
                            </font>
@@ -445,7 +445,15 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#handleAddPositon" text="Dodaj Pozycje" />
+                              <Button mnemonicParsing="false" onAction="#handleAddPositon" text="Dodaj Pozycje">
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin></Button>
+                              <Button mnemonicParsing="false" onAction="#handleRemovePosition" text="Usuń Pozycje">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
                            </children>
                         </HBox>
                      </children>
