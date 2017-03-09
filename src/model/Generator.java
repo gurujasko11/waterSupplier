@@ -34,7 +34,7 @@ public class Generator{
     public static void generate(Invoice invoice) throws IOException {
         PdfFont font = PdfFontFactory.createFont("fonts/NotCourierSans.otf",PdfEncodings.IDENTITY_H, true);
         
-        File f = new File(DEST + invoice.getClient().getInvoiceName());
+        File f = new File(DEST + "/" +invoice.getClient().getInvoiceName());
         f.mkdirs();
         FileOutputStream fos = new FileOutputStream(DEST + "/" + invoice.getClient().getInvoiceName()+ "/" + DateUtil.format(invoice.getIssueDate()) + "_" + invoice.getID().replaceAll("/",".") +".pdf");
         PdfWriter writer = new PdfWriter(fos);
@@ -58,7 +58,7 @@ public class Generator{
         Table logoIDaty = new Table(colWid).setBorder(Border.NO_BORDER);
         logoIDaty.setWidthPercent(100).setTextAlignment(TextAlignment.LEFT).setFontSize(8).setFont(font);
         logoIDaty.addCell(newDefaultCell());
-        logoIDaty.addCell(newDefaultCell().add(new Image(ImageDataFactory.create("/home/busz/Dokumenty/PdfTest/logo.jpg"))));
+        logoIDaty.addCell(newDefaultCell().add(new Image(ImageDataFactory.create("logo/logo.jpg"))));
         logoIDaty.addCell(newDefaultCell().add(daty).setVerticalAlignment(VerticalAlignment.MIDDLE).setHorizontalAlignment(HorizontalAlignment.CENTER));
 
         document.add(logoIDaty);
