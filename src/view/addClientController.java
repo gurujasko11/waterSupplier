@@ -131,17 +131,17 @@ public class addClientController {
     private void editBussiness() {
         Bussiness bus = (Bussiness) client;
         bus.setFullName(firstName.getText());
-        bus.setNIP(secondName.getText());
         if(optionalName.getText().isEmpty())
-            bus.setRegularName(optionalName.getText());
-        else
             bus.setRegularName(bus.getFullName());
+        else
+            bus.setRegularName(optionalName.getText());
+        bus.setNIP(secondName.getText());
         bus.setEmail(email.getText());
         bus.setPhone(phone.getText());
         Adress add = bus.getMainAdress();
         add.setCity(city.getText());
-        if(!flatNumber.getText().isEmpty())
-            add.setFlatNumber(flatNumber.getText());
+//        if(!flatNumber.getText().isEmpty())
+        add.setFlatNumber(flatNumber.getText());
         add.setHomeNumber(houseNumber.getText());
         add.setPostalCode(zipCode.getText());
         add.setStreet(street.getText());
@@ -155,8 +155,8 @@ public class addClientController {
         bus.setPhone(phone.getText());
         Adress add = bus.getMainAdress();
         add.setCity(city.getText());
-        if(!flatNumber.getText().isEmpty())
-            add.setFlatNumber(flatNumber.getText());
+//        if(!flatNumber.getText().isEmpty())
+        add.setFlatNumber(flatNumber.getText());
         add.setHomeNumber(houseNumber.getText());
         add.setPostalCode(zipCode.getText());
         add.setStreet(street.getText());
@@ -206,22 +206,34 @@ public class addClientController {
                     zipCode.getText(),
                     city.getText());
         }
-        client =
+        if(optionalName.getText().isEmpty())
+            client =
                 new Bussiness(add,
                         add,
                         email.getText(),
                         phone.getText(),
-                        optionalName.getText(),
+                        firstName.getText(),
                         firstName.getText(),
                         secondName.getText());
+        else {
+            client =
+                    new Bussiness(add,
+                            add,
+                            email.getText(),
+                            phone.getText(),
+                            firstName.getText(),
+                            firstName.getText(),
+                            secondName.getText());
+        }
     }
 
     public boolean checkData() {
         if(firstName.getText().isEmpty()) return false;
         if(secondName.getText().isEmpty()) return false;
-        if(bussinessButton.isPressed() && optionalName.getText().isEmpty()) return false;
-        if(email.getText().isEmpty()) return false;
-        if(phone.getText().isEmpty()) return false;
+//        if(bussinessButton.isPressed() && optionalName.getText().isEmpty()) return false; trzeba to wylapac i ustawiac zwykla na opcjonalna
+//        if(email.getText().isEmpty()) return false;
+//        TODO
+//        if(phone.getText().isEmpty()) return false;
         if(street.getText().isEmpty()) return false;
         if(houseNumber.getText().isEmpty()) return false;
         if(zipCode.getText().isEmpty()) return false;
