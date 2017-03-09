@@ -55,7 +55,7 @@ public class Adress implements Externalizable{
         sb.append(this.getStreet());
         sb.append(" ");
         sb.append(this.getHomeNumber());
-        if(this.flatNumberProperty().getValue() != null) {
+        if(this.flatNumberProperty().getValue() != null && !this.flatNumberProperty().getValue().isEmpty()) {
             sb.append("/");
             sb.append(this.getFlatNumber());
         }

@@ -1,11 +1,13 @@
 package view;
 
 import model.Adress;
+import model.Invoice;
 import model.Owner;
 
 import java.io.*;
 import java.nio.file.NoSuchFileException;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by janusz on 11.02.17.
@@ -43,6 +45,7 @@ public class DataLoader {
 
     public void save() throws IOException {
         saveTypeToCollection(new File("clients.dat"),mainApp.getClients());
+        saveInvoiceIDs();
     }
 
     public void saveOwnerData() throws IOException {
@@ -58,6 +61,13 @@ public class DataLoader {
 
         fos.close();
     }
+    public void saveInvoiceIDs() throws IOException {
+        File file = new File("invoiceIDs.dat");
+        FileOutputStream fos = new FileOutputStream(file);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        oos.writeObject(Invoice.IDSet);
+    }
 
     public void loadOwnerData() throws IOException, ClassNotFoundException {
         File file = new File("owner.dat");
@@ -72,10 +82,19 @@ public class DataLoader {
             Owner.getInstance().setAccountNumber((String)oos.readObject());
         }
     }
+    public void loadInvoiceIDs() throws IOException, ClassNotFoundException {
+        File file = new File("invoiceIDs.dat");
+        if(file.exists()) {
+            FileInputStream fos = new FileInputStream(file);
+            ObjectInputStream oos = new ObjectInputStream(fos);
+            Invoice.IDSet = (Set<String>) oos.readObject();
+        }
+    }
     public void load() throws IOException, ClassNotFoundException {
         File f = new File("clients.dat");
         loadTypeFromCollection(f,mainApp.getClients());
         loadOwnerData();
+        loadInvoiceIDs();
 //        mainApp.clients.addAll(FileLoader.readFromFile("lista.csv"));
     }
 }

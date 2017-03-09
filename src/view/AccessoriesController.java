@@ -1,6 +1,7 @@
 package view;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Generator;
@@ -38,9 +39,19 @@ public class AccessoriesController {
     @FXML
     private void handleSaveInvoicePath() {
         Path path = Paths.get(saveInvoicePath.getText());
-        if(new File(String.valueOf(path)).exists() == false)
-            return;//tu mozna cos wypisac, ze zla sciezka
-        Generator.DEST = path.toString();
+        if(new File(String.valueOf(path)).exists() == false) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Uwaga");
+            alert.setHeaderText("Podany katalog nie istnieje");
+            alert.showAndWait();
+        }
+        else {
+            Generator.DEST = path.toString();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Gratulacje");
+            alert.setHeaderText("Udalo sie zmienic katalog");
+            alert.showAndWait();
+        }
     }
     @FXML
     public void initialize(){

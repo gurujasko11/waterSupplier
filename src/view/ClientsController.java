@@ -157,7 +157,7 @@ public class ClientsController {
         businessList.refresh();
     }
     private void showBussinessDetails(Bussiness newValue) {
-        clientName.setText(newValue.getRegularName());
+        clientName.setText(newValue.getFullName());
         clientSurename.setText(newValue.getNIP());
         clientAddress.setText(newValue.getMainAdress().toString());
         clientEmail.setText(newValue.getEmail());
