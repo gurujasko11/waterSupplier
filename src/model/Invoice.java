@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Invoice {
@@ -92,11 +89,14 @@ public class Invoice {
 
 
     public Integer getNextID() {
-        while (true) {
-            if(!IDSet.contains(++staticID)) {
-                return staticID;
-            }
+        List<Integer> set = IDSet.stream().mapToInt(i -> Integer.parseInt(i.split("/")[0])).sorted().boxed().collect(Collectors.toList());
+        Integer last = 1;
+        for(Iterator<Integer> it = set.listIterator(); it.hasNext();){
+            if(!it.next().equals(last+1))
+                return last+1;
+            last++;
         }
+        return last+1;
     }
 
 //-----------------------------------------

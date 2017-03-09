@@ -7,6 +7,7 @@ package view;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
@@ -14,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Client;
 import model.testLoader;
 
@@ -21,6 +23,7 @@ import java.io.IOException;
 
 
 public class MainApp extends Application {
+    private MainApp mainApp = this;
     private transient Stage primaryStage;
     private transient BorderPane rootLayout = new BorderPane();
     public ObservableList<Client> clients = FXCollections.observableArrayList();
@@ -39,6 +42,17 @@ public class MainApp extends Application {
 //        Adress add = new Adress("jana",3,4,"pc","krakow");
 //        clients.add(new Person(add,add,"daniel@slaby.com","2234","Daniel","Slaby"));
 //        clients.add(new Person(add,add,"mocny@mariusz.com","4322","Mariusz","Mocny"));
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                DataLoader dataLoader = new DataLoader(mainApp);
+                try {
+                    dataLoader.save();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         initRootLayout();
         showBasicView();
     }
