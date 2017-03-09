@@ -133,6 +133,10 @@ public class CreateInvoiceController {
         invoice.getPositions().stream().map(pos -> pos.getName()).forEach(System.out::println);
     }
 
+    public void handleRemovePosition(){
+        invoice.getPositions().remove(positionsTable.getSelectionModel().getSelectedItem());
+    }
+
     public void initPositionsTable(){
         positionsTable.setItems(invoice.getPositions());
         positionsTable.setEditable(true);
@@ -226,6 +230,7 @@ public class CreateInvoiceController {
         if(!DateUtil.validDate(saleDate.getText())) return false;
         if(issuePlace.getText().isEmpty()) return false;
         if(Invoice.IDSet.contains(invoiceNumber.getText())) return false;
+        if(invoice.getPositions().stream().anyMatch(invoicePosition -> invoicePosition.getName() == null || invoicePosition.getName().isEmpty())) return false;
         return true;
     }
 
