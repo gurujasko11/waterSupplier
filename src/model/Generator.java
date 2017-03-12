@@ -32,17 +32,22 @@ public class Generator{
     private static Owner owner = Owner.getInstance();
 
     public static void generate(Invoice invoice) throws IOException {
+        generateOrgCp(invoice,"oryginał");
+        generateOrgCp(invoice,"kopia");
+    }
+
+    public static void generateOrgCp(Invoice invoice, String t) throws IOException {
         PdfFont font = PdfFontFactory.createFont("fonts/NotCourierSans.otf",PdfEncodings.IDENTITY_H, true);
         
         File f = new File(DEST + "/" +invoice.getClient().getInvoiceName());
         f.mkdirs();
-        FileOutputStream fos = new FileOutputStream(DEST + "/" + invoice.getClient().getInvoiceName()+ "/" + DateUtil.format(invoice.getIssueDate()) + "_" + invoice.getID().replaceAll("/",".") +".pdf");
+        FileOutputStream fos = new FileOutputStream(DEST + "/" + invoice.getClient().getInvoiceName()+ "/" + invoice.getID().replaceAll("/",".") + "-" + t +".pdf");
         PdfWriter writer = new PdfWriter(fos);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
         document.add(new Paragraph("Faktura Vat nr " + invoice.getID()).setTextAlignment(TextAlignment.CENTER).setMargin(0).setBold().setFont(font));
-        document.add(new Paragraph("oryginał").setFontSize(6).setTextAlignment(TextAlignment.CENTER).setMargin(0).setBold().setFont(font));
+        document.add(new Paragraph(t).setFontSize(6).setTextAlignment(TextAlignment.CENTER).setMargin(0).setBold().setFont(font));
         document.add(new Paragraph("\n"));
 
         float datyWidths[] = {45 , 55};
@@ -67,7 +72,7 @@ public class Generator{
         Adress oAddress = owner.getAdress();
         float snWidths[] = {13,89};
         Table sprzedawca = new Table (snWidths).setFontSize(8).setWidthPercent(100).setBorder(Border.NO_BORDER).setFont(font);
-        sprzedawca.addHeaderCell(new Cell(1,2).add("Sprzedawca").setBold().setBorder(Border.NO_BORDER));
+        sprzedawca.addHeaderCell(new Cell(1,2).add("Sprzedawca").setBold().setBorder(Border.NO_BORDER)).setFontSize(14);
         sprzedawca.addCell(newDefaultCell().add("Nazwa:").setTextAlignment(TextAlignment.RIGHT).setBold());
         sprzedawca.addCell(newDefaultCell().add(owner.getName()));
         sprzedawca.addCell(newDefaultCell().add("Adres:").setTextAlignment(TextAlignment.RIGHT).setBold());
@@ -81,7 +86,7 @@ public class Generator{
 
 
         Table nabywca = new Table (snWidths).setFontSize(8).setWidthPercent(100).setBorder(Border.NO_BORDER).setFont(font);
-        nabywca.addHeaderCell(new Cell(1,2).add("Nabywca").setBorder(Border.NO_BORDER).setBold());
+        nabywca.addHeaderCell(new Cell(1,2).add("Nabywca").setBorder(Border.NO_BORDER).setBold()).setFontSize(14);
         nabywca.addCell(newDefaultCell().add("Nazwa:").setTextAlignment(TextAlignment.RIGHT).setBold());
         nabywca.addCell(newDefaultCell().add(invoice.getClient().getInvoiceName()));
         nabywca.addCell(newDefaultCell().add("Adres:").setTextAlignment(TextAlignment.RIGHT).setBold());
@@ -104,11 +109,11 @@ public class Generator{
         pozycje.addHeaderCell(new Cell().add("Lp.").setBold().setPadding(0));
         pozycje.addHeaderCell(new Cell().add("Nazwa towaru lub usługi").setBold().setPadding(0));
         pozycje.addHeaderCell(new Cell().add("Ilość").setBold().setPadding(0));
-        pozycje.addHeaderCell(new Cell().add("Cena netto").setBold().setPadding(0));
-        pozycje.addHeaderCell(new Cell().add("Stawka VAT").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Cena  netto ").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Stawka  VAT ").setBold().setPadding(0));
         pozycje.addHeaderCell(new Cell().add("Wartość netto").setBold().setPadding(0));
         pozycje.addHeaderCell(new Cell().add("Wartość VAT").setBold().setPadding(0));
-        pozycje.addHeaderCell(new Cell().add("Wartość Brutto").setBold().setPadding(0));
+        pozycje.addHeaderCell(new Cell().add("Wartość brutto").setBold().setPadding(0));
 
         int lp = 0;
         for (InvoicePosition pos : invoice.getPositions()) {
@@ -137,17 +142,17 @@ public class Generator{
         float daneBankoweWidths[] = {20, 80};
         Table daneBankowe = new Table(daneBankoweWidths).setFont(font).setFontSize(10).setWidthPercent(60).setBorder(Border.NO_BORDER);
         daneBankowe.addCell(newDefaultCell().add("Bank:").setTextAlignment(TextAlignment.RIGHT).setBold());
-        daneBankowe.addCell(newDefaultCell().add("ING BANK ŚLĄSKI"));
+        daneBankowe.addCell(newDefaultCell().add(owner.getBankName()));
         daneBankowe.addCell(newDefaultCell().add("Nr konta:").setTextAlignment(TextAlignment.RIGHT).setBold());
-        daneBankowe.addCell(newDefaultCell().add("57 1050 1445 1000 0022 9748 5050"));
+        daneBankowe.addCell(newDefaultCell().add(owner.getAccountNumber()));
 
         document.add(new Paragraph("\n"));
         document.add(daneBankowe);
 
         Table daneLewe = new Table(2).setFontSize(8).setFont(font).setWidthPercent(80).setPadding(0).setBorder(Border.NO_BORDER);
-        daneLewe.addCell(newDefaultCell().add("Forma platności:").setTextAlignment(TextAlignment.RIGHT).setBold());
+        daneLewe.addCell(newDefaultCell().add("Forma płatności:").setTextAlignment(TextAlignment.RIGHT).setBold());
         daneLewe.addCell(newDefaultCell().add(invoice.getPaymentForm()));
-        daneLewe.addCell(newDefaultCell().add("Termin Platności:").setTextAlignment(TextAlignment.RIGHT).setBold());
+        daneLewe.addCell(newDefaultCell().add("Termin płatności:").setTextAlignment(TextAlignment.RIGHT).setBold());
         daneLewe.addCell(newDefaultCell().add(DateUtil.format(invoice.getPaymentDate())));
 
         Table danePrawe = new Table(2).setFontSize(8).setFont(font).setWidthPercent(80).setHorizontalAlignment(HorizontalAlignment.RIGHT).setPadding(0).setBorder(Border.NO_BORDER);
@@ -165,14 +170,14 @@ public class Generator{
         document.add(new Paragraph("\n").setFontSize(5));
         document.add(daneKoncowe);
 
-        document.add(new Paragraph("Słownie:" + ConvertUtil.NumToText(invoice.getBruttoTotal()) + "\n").setFontSize(10).setFont(font));
+        document.add(new Paragraph("Słownie:" + ConvertUtil.NumToText(invoice.getBruttoTotal()) + " zł\n").setFontSize(9).setFont(font));
 
         Table podpisy = new Table(2).setVerticalAlignment(VerticalAlignment.BOTTOM).setWidthPercent(100).setBorder(Border.NO_BORDER).setTextAlignment(TextAlignment.CENTER).setPadding(0);
         podpisy.addCell( newDefaultCell().add("...............................................................................").setFontSize(5));
         podpisy.addCell( newDefaultCell().add("...............................................................................").setFontSize(5));
-        podpisy.addCell( newDefaultCell().add("osoba upoważniona do wystawienia").setFontSize(5).setFont(font));
-        podpisy.addCell( newDefaultCell().add("osoba upoważniona do odbioru").setFontSize(5).setFont(font));
-        document.add(new Paragraph("\n"));
+        podpisy.addCell( newDefaultCell().add("Osoba upoważniona do wystawienia").setFontSize(5).setFont(font));
+        podpisy.addCell( newDefaultCell().add("Osoba upoważniona do odbioru").setFontSize(5).setFont(font));
+        document.add(new Paragraph("\n\n"));
         document.add(podpisy);
 
         document.close();

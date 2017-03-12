@@ -100,9 +100,9 @@ public class CreateInvoiceController {
     }
 
     public void showOwner(){
-        ownerName.setText("Asset International Sebastian Oleszczuk");
-        ownerAddress.setText("ul. Plaszowska 31 30-713 Kraków");
-        ownerNip.setText("696-269-42-10");
+        ownerName.setText(Owner.getInstance().getName());
+        ownerAddress.setText(Owner.getInstance().getAdress().toString());
+        ownerNip.setText(Owner.getInstance().getNIP());
     }
 
     public void showClient(){
@@ -260,8 +260,10 @@ public class CreateInvoiceController {
             invoice.setPaymentForm(paymentForm.getText());
             invoice.setPaymentDate(paymentDate.getValue());
             invoice.setPrepayment(Double.parseDouble(prepayment.getText()));
-            invoice.setID(invoiceNumber.getText());
-            Invoice.IDSet.add(invoice.getID());
+            if(!invoice.getID().equals(invoiceNumber.getText())) {
+                invoice.setID(invoiceNumber.getText());
+                Invoice.IDSet.add(invoice.getID());
+            }
             Generator.generate(invoice);
             dialogStage.close();
         }

@@ -4,10 +4,10 @@ package Utils;
  * Created by janusz on 21.02.17.
  */
 public class ConvertUtil {
-    private static String jednosci[] = {"", " jeden", " dwa", " trzy", " cztery", " piec", " szesc", " siedem", " osiem", " dziewiec"};
-    private static String nascie[] = {"dziesiec", " jedenascie", " dwanascie", " trzynascie", " czternascie", " pietnascie", " szesnascie", " siedemnascie", " osiemnascie", " dziewietnascie"};
-    private static String dziesiatki[] ={"", " dziesiec", " dwadziescia", " trzydziesci", " czterdziesci", " piecdziesiat", " szescdziesiat", " siedemdziesiat", " osiemdziesiat", " dziewiecdziesiat"};
-    private static String setki[] = {"", " sto", " dwiescie", " trzysta", " czterysta", " piecset", " szescset", " siedemset", " osiemset", " dziewiecset"};
+    private static String jednosci[] = {"", " jeden", " dwa", " trzy", " cztery", " pięć", " sześć", " siedem", " osiem", " dziewięć"};
+    private static String nascie[] = {"dziesięć", " jedenaście", " dwanaście", " trzynaście", " czternaście", " piętnaście", " szesnaście", " siedemnaście", " osiemnaście", " dziewiętnaście"};
+    private static String dziesiatki[] ={"", " dziesięć", " dwadzieścia", " trzydzieści", " czterdzieści", " pięćdziesiąt", " sześćdziesiąt", " siedemdziesiąt", " osiemdziesiąt", " dziewięćdziesiąt"};
+    private static String setki[] = {"", " sto", " dwieście", " trzysta", " czterysta", " pięćset", " sześćset", " siedemset", " osiemset", " dziewięćset"};
     private static String x[] = {"", " tys.", " mln.", " mld.", " bln.", " bld."};
     public static String NumToText(int num) {
         String slownie = " ";
@@ -43,6 +43,6 @@ public class ConvertUtil {
     }
 
     public static String NumToText(Double num) {
-        return NumToText(num.intValue()) + ((Double)((num*100)%100)).intValue() + "/100";
+        return NumToText(num.intValue()) + " " + ((Double)((num*100)%100)).intValue() + "/100";
     }
 }

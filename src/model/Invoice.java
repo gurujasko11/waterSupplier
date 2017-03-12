@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,13 +25,23 @@ public class Invoice {
     String paymentForm;
     public static Set<String> IDSet = new HashSet<>();
     public static Integer staticID = 1;
+
+    private static Month lastIDMonth = LocalDate.now().getMonth();
 //-----------------------------------------
 //
 //constructors
 //
 //-----------------------------------------
     public Invoice() {
-        ID = new SimpleStringProperty(getNextID().toString()+"/"+ LocalDate.now().getYear() + "/A");
+        if(LocalDate.now().getMonth().equals(lastIDMonth.plus(1))){
+            staticID = 1;
+        }
+        if(LocalDate.now().getMonthValue() < 10){
+            ID = new SimpleStringProperty(getNextID().toString()+ "/0"+ LocalDate.now().getMonthValue() + "/"+ LocalDate.now().getYear() );
+        }else{
+            ID = new SimpleStringProperty(getNextID().toString()+ "/"+ LocalDate.now().getMonthValue() + "/"+ LocalDate.now().getYear() );
+        }
+        lastIDMonth = LocalDate.now().getMonth();
 
         issueDate = LocalDate.now();
         saleDate = issueDate;
