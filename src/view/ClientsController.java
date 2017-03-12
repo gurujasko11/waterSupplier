@@ -156,6 +156,10 @@ public class ClientsController {
         personList.refresh();
         businessList.refresh();
     }
+    public void clearSelectionModel() {
+        personList.getSelectionModel().clearSelection();
+        businessList.getSelectionModel().clearSelection();
+    }
     private void showBussinessDetails(Bussiness newValue) {
         clientName.setText(newValue.getFullName());
         clientSurename.setText(newValue.getNIP());

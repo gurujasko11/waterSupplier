@@ -37,12 +37,12 @@
                      <children>
                         <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                            <panes>
-                              <TitledPane animated="false" text="osoby prywatne">
+                              <TitledPane animated="false" onMouseClicked="#clearSelectionModel" text="osoby prywatne">
                                  <content>
                                     <ListView fx:id="personList" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
                               </TitledPane>
-                              <TitledPane animated="false" text="firmy">
+                              <TitledPane animated="false" onMouseClicked="#clearSelectionModel" text="firmy">
                                  <content>
                                     <ListView fx:id="businessList" prefHeight="200.0" prefWidth="200.0" />
                                  </content>
