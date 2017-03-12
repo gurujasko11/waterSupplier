@@ -11,10 +11,6 @@
         <option name="version" value="" />
       </options>
     </properties>
-    <root id="root">
-      <element id="archive" name="water_suplier.jar">
-        <element id="module-output" name="water_suplier" />
-      </element>
-    </root>
+    <root id="root" />
   </artifact>
 </component>
